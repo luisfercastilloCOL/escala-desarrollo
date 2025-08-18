@@ -432,7 +432,11 @@ const Evaluacion: React.FC = () => {
         ...area,
         puntuacionDirecta: Number(puntuacionDirecta),
         puntuacionTipica: tipica,
+<<<<<<< HEAD
         percentil: Number(percentil)
+=======
+        percentil: percentil
+>>>>>>> a194f811d274f088b34f2ab8934c6ef94d0ef019
       }
     })
     
