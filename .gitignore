@@ -1,1 +1,8 @@
 node_modules/
+<<<<<<< HEAD
+=======
+dist/
+.DS_Store
+**/.DS_Store
+*.log
+>>>>>>> 0260babfd56fcef891254bc0c466db06caccfa5f
