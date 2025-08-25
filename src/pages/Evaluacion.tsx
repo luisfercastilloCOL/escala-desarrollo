@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { obtenerPuntuacionTipica } from '../data/tablasConversion'
 import { EvaluacionDesarrollo } from '../types/evaluacion'
 
 const Evaluacion: React.FC = () => {
@@ -10,9 +9,8 @@ const Evaluacion: React.FC = () => {
       nombre: '',
       apellidos: '',
       fechaNacimiento: '',
-      fechaNacimientoPrematura: '',
-      edadCronologica: { años: 0, meses: 0, dias: 0 },
-      edadCorregida: { años: 0, meses: 0, dias: 0 }
+      semanasGestacion: '',
+      genero: ''
     },
     areas: {
       motricidadGruesa: {
@@ -21,7 +19,7 @@ const Evaluacion: React.FC = () => {
         items: [],
         puntuacionDirecta: 0,
         puntuacionTipica: 0,
-        percentil: ''
+        percentil: 0
       },
       motricidadFinaAdaptativa: {
         nombre: 'Motricidad Fina Adaptativa',
@@ -29,7 +27,7 @@ const Evaluacion: React.FC = () => {
         items: [],
         puntuacionDirecta: 0,
         puntuacionTipica: 0,
-        percentil: ''
+        percentil: 0
       },
       audicionLenguaje: {
         nombre: 'Audición y Lenguaje',
@@ -37,7 +35,7 @@ const Evaluacion: React.FC = () => {
         items: [],
         puntuacionDirecta: 0,
         puntuacionTipica: 0,
-        percentil: ''
+        percentil: 0
       },
       personalSocial: {
         nombre: 'Personal Social',
@@ -45,7 +43,7 @@ const Evaluacion: React.FC = () => {
         items: [],
         puntuacionDirecta: 0,
         puntuacionTipica: 0,
-        percentil: ''
+        percentil: 0
       }
     },
     puntuacionTotal: 0,

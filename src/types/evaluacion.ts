@@ -10,7 +10,7 @@ export interface AreaEvaluacion {
 export interface ItemEvaluacion {
   id: string
   descripcion: string
-  completado: boolean | null // Allow null for unselected state
+  completado: boolean | null
   edadAparicion: string
   observaciones: string
 }
@@ -38,8 +38,8 @@ export interface EvaluacionDesarrollo {
 export interface RangoEdad {
   id: string
   nombre: string
-  edadMinima: number // en meses
-  edadMaxima: number // en meses
+  edadMinima: number
+  edadMaxima: number
   descripcion: string
 }
 
