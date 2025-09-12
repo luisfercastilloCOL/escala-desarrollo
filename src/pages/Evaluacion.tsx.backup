@@ -203,7 +203,7 @@ const Evaluacion: React.FC = () => {
     return '6-7 años'
   }
 
-  // Función auxiliar para generar items del 1 al 36 por área
+  // Función auxiliar para generar items del 1 al 36
   const generarItemsArea = (area: string, items: string[]): ItemEvaluacion[] => {
     const rangos = ['0-1 mes', '1-3 meses', '3-6 meses', '6-9 meses', '9-12 meses', 
                    '1-1.5 años', '1.5-2 años', '2-3 años', '3-4 años', '4-5 años', '5-6 años', '6-7 años']
@@ -532,16 +532,20 @@ const Evaluacion: React.FC = () => {
     setRangoActual(rangoInicial)
     setAreaActual('motricidadGruesa')
     
-    // Siempre comenzar en el item 1 (índice 0)
-    setItemActual(0)
+    // Encontrar el primer item del rango de edad para esta área
+    const todosLosItems = obtenerTodosLosItemsArea('motricidadGruesa')
+    const primerItemRango = todosLosItems.findIndex(item => item.rango === rangoInicial)
+    setItemActual(primerItemRango >= 0 ? primerItemRango : 0)
     
     setEvaluacionAreas(true)
-    setMensaje(`Iniciando evaluación de Motricidad Gruesa desde el item 1...`)
+    setMensaje(`Iniciando evaluación de Motricidad Gruesa en rango ${rangoInicial}...`)
   }
 
   const obtenerNumeroSecuencial = (area: string): number => {
-    // Cada área tiene su propia numeración del 1 al 36
-    return itemActual + 1
+    const areaData = areas[area]
+    if (!areaData) return 0
+    const itemsEvaluados = areaData.items.filter(item => item.completado !== undefined)
+    return itemsEvaluados.length + 1
   }
 
   const evaluarItem = (cumple: boolean) => {
@@ -666,14 +670,21 @@ const Evaluacion: React.FC = () => {
   const irAArea = (area: string) => {
     setAreaActual(area)
     
-    // Siempre comenzar en el item 1 (índice 0)
-    setRangoActual('')
-    setItemActual(0)
-    
+    // Si el área ya está completada, ir al primer item
     if (areasCompletadas.includes(area)) {
+      setRangoActual('')
+      setItemActual(0)
       setMensaje(`Revisando evaluación de ${areas[area].nombre}...`)
     } else {
-      setMensaje(`Iniciando evaluación de ${areas[area].nombre} desde el item 1...`)
+      // Si no está completada, iniciar desde el rango de edad correcto
+      const rangoInicial = determinarRangoEdad(edadCorregida)
+      setRangoActual(rangoInicial)
+      
+      const todosLosItems = obtenerTodosLosItemsArea(area)
+      const primerItemRango = todosLosItems.findIndex(item => item.rango === rangoInicial)
+      setItemActual(primerItemRango >= 0 ? primerItemRango : 0)
+      
+      setMensaje(`Iniciando evaluación de ${areas[area].nombre} en rango ${rangoInicial}...`)
     }
   }
 
@@ -729,12 +740,15 @@ const Evaluacion: React.FC = () => {
     const siguienteArea = obtenerSiguienteArea(areaActual)
     if (siguienteArea) {
       setAreaActual(siguienteArea)
-      setRangoActual('')
+      const rangoInicial = determinarRangoEdad(edadCorregida)
+      setRangoActual(rangoInicial)
       
-      // Siempre comenzar en el item 1 (índice 0)
-      setItemActual(0)
+      // Encontrar el primer item del rango de edad para la siguiente área
+      const todosLosItems = obtenerTodosLosItemsArea(siguienteArea)
+      const primerItemRango = todosLosItems.findIndex(item => item.rango === rangoInicial)
+      setItemActual(primerItemRango >= 0 ? primerItemRango : 0)
       
-      setMensaje(`Iniciando evaluación de ${areas[siguienteArea].nombre} desde el item 1...`)
+      setMensaje(`Iniciando evaluación de ${areas[siguienteArea].nombre} en rango ${rangoInicial}...`)
     } else {
       setEvaluacionCompletada(true)
       setMensaje('¡Evaluación completada! Todas las áreas han sido evaluadas.')
@@ -956,52 +970,22 @@ const Evaluacion: React.FC = () => {
             </p>
             
             {/* Botones de navegación entre áreas */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              {['motricidadGruesa', 'motricidadFinaAdaptativa', 'audicionLenguaje', 'personalSocial'].map((area) => {
-                const areaData = areas[area]
-                const itemsEvaluados = areaData.items.filter(item => item.completado !== undefined).length
-                const progresoPorcentaje = (itemsEvaluados / 36) * 100
-                
-                return (
-                  <button
-                    key={area}
-                    className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
-                      area === areaActual
-                        ? 'border-blue-500 bg-blue-50 text-blue-700'
-                        : areasCompletadas.includes(area)
-                        ? 'border-green-500 bg-green-50 text-green-700'
-                        : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-                    }`}
-                    onClick={() => irAArea(area)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-sm">{obtenerNombreArea(area).split(' ')[0]}</h3>
-                        <div className="mt-1">
-                          <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
-                            <span>{itemsEvaluados}/36 items</span>
-                            <span>{Math.round(progresoPorcentaje)}%</span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-1.5">
-                            <div 
-                              className={`h-1.5 rounded-full transition-all duration-300 ${
-                                areasCompletadas.includes(area) ? 'bg-green-500' : 'bg-blue-500'
-                              }`}
-                              style={{ width: `${progresoPorcentaje}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right ml-2">
-                        <div className="text-lg font-bold">
-                          {areaData.puntajeTotal}/{areaData.puntajeMaximo}
-                        </div>
-                        <div className="text-xs opacity-75">pts</div>
-                      </div>
-                    </div>
-                  </button>
-                )
-              })}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {['motricidadGruesa', 'motricidadFinaAdaptativa', 'audicionLenguaje', 'personalSocial'].map((area) => (
+                <button
+                  key={area}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    area === areaActual
+                      ? 'bg-blue-600 text-white'
+                      : areasCompletadas.includes(area)
+                      ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                  onClick={() => irAArea(area)}
+                >
+                  {obtenerNombreArea(area).split(' ')[0]}
+                </button>
+              ))}
             </div>
             
             {mensaje && (
@@ -1035,96 +1019,37 @@ const Evaluacion: React.FC = () => {
                   
                   return (
                     <div className="border border-gray-200 rounded-lg p-4">
-                      <div className="mb-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-4">
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-blue-600">{numeroSecuencial}</div>
-                              <div className="text-xs text-gray-500">de 36</div>
-                            </div>
-                            <div className="flex flex-col space-y-1">
-                              <span className="text-sm font-medium text-gray-700">
-                                {obtenerNombreArea(areaActual)}
-                              </span>
-                              <div className="flex items-center space-x-2">
-                                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                  {itemActual + 1} de {todosLosItems.length}
-                                </span>
-                                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                                  {rangoActual}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-xs text-gray-500 mb-1">Progreso del área</div>
-                            <div className="w-40 bg-gray-200 rounded-full h-3">
-                              <div 
-                                className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-300" 
-                                style={{ width: `${((itemActual + 1) / todosLosItems.length) * 100}%` }}
-                              ></div>
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              {Math.round(((itemActual + 1) / todosLosItems.length) * 100)}% completado
-                            </div>
-                          </div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-4">
+                          <span className="text-sm text-gray-500">
+                            Item {numeroSecuencial} - {rangoActual}
+                          </span>
+                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                            {itemActual + 1} de {todosLosItems.length}
+                          </span>
                         </div>
-                        
-                        <div className="bg-gray-50 rounded-lg p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-gray-600">ID del Item:</span>
-                            <span className="text-sm font-mono bg-white px-2 py-1 rounded border">
-                              {item.id}
-                            </span>
-                          </div>
-                        </div>
+                        <span className="text-sm text-gray-500">
+                          {item.id}
+                        </span>
                       </div>
                       
                       <p className="text-lg font-medium text-gray-800 mb-4">
                         {item.descripcion}
                       </p>
                       
-                      <div className="space-y-4">
-                        <div className="flex space-x-4">
-                          <button
-                            onClick={() => evaluarItem(true)}
-                            className="flex-1 bg-green-600 text-white px-6 py-4 rounded-lg font-medium hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
-                          >
-                            <div className="flex items-center justify-center space-x-2">
-                              <span className="text-xl">✓</span>
-                              <span>Cumple</span>
-                            </div>
-                          </button>
-                          <button
-                            onClick={() => evaluarItem(false)}
-                            className="flex-1 bg-red-600 text-white px-6 py-4 rounded-lg font-medium hover:bg-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
-                          >
-                            <div className="flex items-center justify-center space-x-2">
-                              <span className="text-xl">✗</span>
-                              <span>No Cumple</span>
-                            </div>
-                          </button>
-                        </div>
-                        
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={retrocederItem}
-                            disabled={itemActual === 0}
-                            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                              itemActual === 0
-                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                            }`}
-                          >
-                            ← Anterior
-                          </button>
-                          <button
-                            onClick={() => setMensaje('')}
-                            className="px-4 py-2 rounded-lg font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 transition-all duration-200"
-                          >
-                            Limpiar mensaje
-                          </button>
-                        </div>
+                      <div className="flex space-x-4">
+                        <button
+                          className="flex-1 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+                          onClick={() => evaluarItem(true)}
+                        >
+                          ✓ Cumple
+                        </button>
+                        <button
+                          className="flex-1 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+                          onClick={() => evaluarItem(false)}
+                        >
+                          ✗ No Cumple
+                        </button>
                       </div>
                       
                       {/* Botones de navegación */}
