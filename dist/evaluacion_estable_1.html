@@ -1,0 +1,3714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo Escala Abreviada del Desarrollo Infantil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-warning {
+            background: #ffc107;
+            color: #000;
+        }
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+        .btn-info {
+            background: #17a2b8;
+        }
+        .btn-info:hover {
+            background: #138496;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .area-btn {
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            width: calc(50% - 10px);
+            transition: background-color 0.3s;
+        }
+        .area-btn:hover {
+            background: #218838;
+        }
+        .area-btn.completada {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .hidden {
+            display: none;
+        }
+        .item-evaluado {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .item-cumple {
+            background: #d4edda;
+            color: #155724;
+        }
+        .item-no-cumple {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .resumen-area {
+            margin: 10px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .item-actual {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .botones-evaluacion {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .botones-evaluacion .btn {
+            width: calc(50% - 5px);
+            margin: 0;
+        }
+        .botones-navegacion {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .botones-navegacion .btn {
+            width: calc(33.33% - 7px);
+            margin: 0;
+        }
+        .info-rango {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ffc107;
+        }
+        .progreso-area {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .barra-progreso {
+            background: #007bff;
+            height: 20px;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        .alerta-dos-consecutivos {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #dc3545;
+            font-weight: bold;
+        }
+        .estado-evaluacion {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #17a2b8;
+        }
+        .puntuacion-directa-info {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #333; margin-bottom: 30px; font-size: 28px;">
+            📊 Cálculo Escala Abreviada del Desarrollo Infantil
+        </h1>
+        
+        <!-- Formulario de datos del paciente -->
+        <div id="formularioPaciente">
+            <h2>📋 Datos del Paciente</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" placeholder="Ej: María González" required>
+                <div id="errorNombre" class="error hidden"></div>
+            </div>
+            <div class="form-group">
+                <label for="apellidos">Apellidos *</label>
+                <input type="text" id="apellidos" placeholder="Ej: López Martínez" required>
+                <div id="errorApellidos" class="error hidden"></div>
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de nacimiento *</label>
+                <input type="date" id="fechaNacimiento" required>
+                <div id="errorFecha" class="error hidden"></div>
+            </div>
+            <div class="form-group">
+                <label for="semanasGestacion">Semanas de gestación *</label>
+                <input type="number" id="semanasGestacion" min="20" max="45" placeholder="40" required>
+                <div id="errorSemanas" class="error hidden"></div>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género *</label>
+                <select id="genero" required>
+                    <option value="">Seleccionar</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+                <div id="errorGenero" class="error hidden"></div>
+            </div>
+            
+            <button class="btn" onclick="iniciarEvaluacion()" id="btnIniciar">
+                🚀 Iniciar Evaluación
+            </button>
+            <div id="mensajeEstado" class="success hidden"></div>
+        </div>
+        
+        <!-- Información de edades -->
+        <div id="infoEdades" class="card hidden">
+            <h3>📊 Información de Edades</h3>
+            <p><strong>Edad Cronológica:</strong> <span id="edadCronologica"></span></p>
+            <p><strong>Edad Corregida:</strong> <span id="edadCorregida"></span></p>
+            <p><strong>Rango de Edad:</strong> <span id="rangoEdad"></span></p>
+        </div>
+        
+        <!-- Selección de áreas -->
+        <div id="seleccionAreas" class="card hidden">
+            <h3>🎯 Selección de Áreas</h3>
+            <div id="estadoEvaluacion" class="estado-evaluacion hidden">
+                <strong>Estado:</strong> <span id="textoEstado"></span>
+            </div>
+            <button class="area-btn" onclick="seleccionarArea('motricidadGruesa')" id="btnMotricidadGruesa">Motricidad Gruesa</button>
+            <button class="area-btn" onclick="seleccionarArea('motricidadFina')" id="btnMotricidadFina">Motricidad Fina</button>
+            <button class="area-btn" onclick="seleccionarArea('audicionLenguaje')" id="btnAudicionLenguaje">Audición y Lenguaje</button>
+            <button class="area-btn" onclick="seleccionarArea('personalSocial')" id="btnPersonalSocial">Personal Social</button>
+        </div>
+        
+        <!-- Evaluación de área -->
+        <div id="evaluacionArea" class="card hidden">
+            <h3 id="tituloArea">Evaluación de Motricidad Gruesa</h3>
+            
+            <!-- Información del rango actual -->
+            <div class="info-rango">
+                <strong>Rango Actual:</strong> <span id="rangoActual"></span><br>
+                <strong>Item:</strong> <span id="numeroItem"></span> de <span id="totalItemsRango"></span><br>
+                <strong>Progreso:</strong> <span id="progresoTexto"></span>
+            </div>
+            
+            <!-- Progreso de la evaluación -->
+            <div class="progreso-area">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span>Progreso del Área</span>
+                    <span id="progresoAreaTexto">0%</span>
+                </div>
+                <div class="barra-progreso" id="barraProgresoArea" style="width: 0%;"></div>
+            </div>
+            
+            <div class="item-actual">
+                <p id="enunciadoItem">Cargando item...</p>
+                <div class="botones-evaluacion">
+                    <button class="btn btn-success" onclick="evaluarItem(true)">✅ Cumple</button>
+                    <button class="btn btn-danger" onclick="evaluarItem(false)">❌ No cumple</button>
+                </div>
+                <div class="botones-navegacion">
+                    <button class="btn btn-secondary" onclick="itemAnterior()">⬅️ Anterior</button>
+                    <button class="btn btn-info" onclick="cambiarRango()">🔄 Cambiar Rango</button>
+                    <button class="btn btn-warning" onclick="cambiarArea()">🏠 Cambiar Área</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Alerta de dos consecutivos -->
+        <div id="alertaDosConsecutivos" class="alerta-dos-consecutivos hidden">
+            <strong>⚠️ EVALUACIÓN TERMINADA:</strong> Se han registrado dos evaluaciones consecutivas que no cumplen. 
+            Esta área ha sido completada. Puedes continuar con otra área o ver el resumen final.
+        </div>
+        
+        <!-- Información de puntuación directa -->
+        <div id="infoPuntuacionDirecta" class="puntuacion-directa-info hidden">
+            <strong>📊 PUNTUACIÓN DIRECTA CALCULADA:</strong><br>
+            <span id="textoPuntuacionDirecta"></span>
+        </div>
+        
+        <!-- Items evaluados -->
+        <div id="itemsEvaluados" class="card hidden">
+            <h3>📝 Items Evaluados</h3>
+            <div id="listaItems"></div>
+        </div>
+        
+        <!-- Resumen final -->
+        <div id="resumenFinal" class="card hidden">
+            <h3>📊 Resumen de Evaluación</h3>
+            <div id="puntuacionesFinales"></div>
+            <button class="btn btn-success" onclick="descargarExcel()">📊 Descargar Excel</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let datosPaciente = {};
+        let areaActual = '';
+        let itemsEvaluados = [];
+        let indiceItemActual = 0;
+        let itemsAreaActual = [];
+        let puntuacionesFinales = {};
+        let edadCalculada = {};
+        let rangoActual = '';
+        let todosLosItemsArea = [];
+        let indiceRangoActual = 0;
+        let rangosOrdenados = [];
+        let areasCompletadas = [];
+        let evaluacionTerminada = false;
+        
+        // Datos completos de items por área desde Excel
+        const datosCompletos = {
+        "motricidadGruesa": {
+                "Rango 1": [
+                        {
+                                "item": 1,
+                                "enunciado": "Realiza reflejo de búsqueda y reflejo de succión.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 2,
+                                "enunciado": "El reflejo de moro está presente y es simétrico.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 3,
+                                "enunciado": "Mueve sus extremidades.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 2": [
+                        {
+                                "item": 4,
+                                "enunciado": "Sostiene la cabeza al levantarlo de los brazos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 5,
+                                "enunciado": "Levanta la cabeza y pecho en prono.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 6,
+                                "enunciado": "Gira la cabeza desde la línea media.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 3": [
+                        {
+                                "item": 7,
+                                "enunciado": "Control de cabeza sentado con apoyo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 8,
+                                "enunciado": "Se voltea.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 9,
+                                "enunciado": "Se mantiene sentado momentáneamente.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 4": [
+                        {
+                                "item": 10,
+                                "enunciado": "Se mantiene sentado sin apoyo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 11,
+                                "enunciado": "Adopta la posición de sentado.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 12,
+                                "enunciado": "Se arrastra en posición prono.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 5": [
+                        {
+                                "item": 13,
+                                "enunciado": "Gatea con desplazamiento cruzado (alternando rodillas y manos).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 14,
+                                "enunciado": "Adopta posición bípeda y se sostiene de pie con apoyo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 15,
+                                "enunciado": "Se sostiene de pie sin apoyo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 6": [
+                        {
+                                "item": 16,
+                                "enunciado": "Se pone de pie sin ayuda.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 17,
+                                "enunciado": "Da pasos solo(a).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 18,
+                                "enunciado": "Camina con desplazamiento cruzado sin ayuda (alternando manos y pies).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 7": [
+                        {
+                                "item": 19,
+                                "enunciado": "Corre.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 20,
+                                "enunciado": "Lanza la pelota.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 21,
+                                "enunciado": "Patea la pelota.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 8": [
+                        {
+                                "item": 22,
+                                "enunciado": "Salta con los pies juntos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 23,
+                                "enunciado": "Se empina en ambos pies.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 24,
+                                "enunciado": "Sube dos escalones sin apoyo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 9": [
+                        {
+                                "item": 25,
+                                "enunciado": "Camina en puntas de pies.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 26,
+                                "enunciado": "Se para en un solo pie.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 27,
+                                "enunciado": "Baja dos escalones con apoyo mínimo, alternando los pies.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 10": [
+                        {
+                                "item": 28,
+                                "enunciado": "Camina sobre una línea recta sin apoyo visual.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 29,
+                                "enunciado": "Salta en tres o más ocasiones en un pie.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 30,
+                                "enunciado": "Hace rebotar y agarra la pelota.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 11": [
+                        {
+                                "item": 31,
+                                "enunciado": "Hace “caballitos” (alternando los pies).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 32,
+                                "enunciado": "Salta de lado a lado de una línea con los pies juntos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 33,
+                                "enunciado": "Salta desplazándose con ambos pies.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 12": [
+                        {
+                                "item": 34,
+                                "enunciado": "Mantiene el equilibrio en la punta de los pies con los ojos cerrados.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 35,
+                                "enunciado": "Realiza saltos alternados en secuencia.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 36,
+                                "enunciado": "Realiza alguna actividad de integración motora.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ]
+        },
+        "motricidadFina": {
+                "Rango 1": [
+                        {
+                                "item": 1,
+                                "enunciado": "Reflejo de prensión palmar.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 2,
+                                "enunciado": "Reacciona ante luz y sonidos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 3,
+                                "enunciado": "Sigue movimiento horizontal.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 2": [
+                        {
+                                "item": 4,
+                                "enunciado": "Abre y mira sus manos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 5,
+                                "enunciado": "Sostiene objeto en la mano.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 6,
+                                "enunciado": "Se lleva un objeto a la boca.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 3": [
+                        {
+                                "item": 7,
+                                "enunciado": "Agarra objetos voluntariamente.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 8,
+                                "enunciado": "Retiene un objeto cuando se lo intentan quitar.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 9,
+                                "enunciado": "Pasa objeto de una mano a otra.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 4": [
+                        {
+                                "item": 10,
+                                "enunciado": "Sostiene un objeto en cada mano.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 11,
+                                "enunciado": "Deja caer los objetos intencionalmente.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 12,
+                                "enunciado": "Agarra con pulgar e índice (pinza).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 5": [
+                        {
+                                "item": 13,
+                                "enunciado": "Agarra tercer objeto sin soltar otros.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 14,
+                                "enunciado": "Saca objetos del contenedor.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 15,
+                                "enunciado": "Busca objetos escondidos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 6": [
+                        {
+                                "item": 16,
+                                "enunciado": "Hace torre de tres cubos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 17,
+                                "enunciado": "Pasa hojas de un libro.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 18,
+                                "enunciado": "Agarra una cuchara y se la lleva a la boca.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 7": [
+                        {
+                                "item": 19,
+                                "enunciado": "Garabatea espontáneamente.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 20,
+                                "enunciado": "Quita la tapa del contenedor o frasco de muestra de orina.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 21,
+                                "enunciado": "Hace torre de cinco cubos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 8": [
+                        {
+                                "item": 22,
+                                "enunciado": "Ensarta cuentas perforadas con pinza.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 23,
+                                "enunciado": "Rasga papel con pinza de ambas manos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 24,
+                                "enunciado": "Copia línea horizontal y vertical.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 9": [
+                        {
+                                "item": 25,
+                                "enunciado": "Hace una bola de papel con sus dedos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 26,
+                                "enunciado": "Copia círculo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 27,
+                                "enunciado": "Figura humana rudimentaria.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 10": [
+                        {
+                                "item": 28,
+                                "enunciado": "Imita el dibujo de una escalera.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 29,
+                                "enunciado": "Corta papel con las tijeras.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 30,
+                                "enunciado": "Figura humana 2.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 11": [
+                        {
+                                "item": 31,
+                                "enunciado": "Dibuja el lugar en el que vive.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 32,
+                                "enunciado": "Modelo de cubos “escalera”.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 33,
+                                "enunciado": "Copia de un triángulo.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 12": [
+                        {
+                                "item": 34,
+                                "enunciado": "Copia de una figura de puntos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 35,
+                                "enunciado": "Puede hacer una figura plegada.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 36,
+                                "enunciado": "Ensarta cordón cruzado (cómo amarrarse los zapatos).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ]
+        },
+        "audicionLenguaje": {
+                "Rango 1": [
+                        {
+                                "item": 1,
+                                "enunciado": "Se sobresalta con un ruido",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 2,
+                                "enunciado": "Contempla momentaneamente a una persona",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 3,
+                                "enunciado": "Llora para expresar necesidades",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 2": [
+                        {
+                                "item": 4,
+                                "enunciado": "Se tranquiliza con las voz humana",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 5,
+                                "enunciado": "Produce sonidos guturales indiferenciados",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 6,
+                                "enunciado": "Busca el sonido con la mirada",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 3": [
+                        {
+                                "item": 7,
+                                "enunciado": "Busca diferentes sonidos con la mirada",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 8,
+                                "enunciado": "Pone atencion a la conversacion",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 9,
+                                "enunciado": "Produce cuatro o mas sonidos diferentes",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 4": [
+                        {
+                                "item": 10,
+                                "enunciado": "Pronuncia tres o mas silabas",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 11,
+                                "enunciado": "Reacciona cuando se le llama por su nombre ",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 12,
+                                "enunciado": "Reacciona a tres palabras familiares",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 5": [
+                        {
+                                "item": 13,
+                                "enunciado": "Reacciona a la palabra no",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 14,
+                                "enunciado": "Llama al cuidados",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 15,
+                                "enunciado": "Responde a una instrucción sencilla",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 6": [
+                        {
+                                "item": 16,
+                                "enunciado": "Aproximacion a una palabra con intenion comunicativa",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 17,
+                                "enunciado": "Reconoce al menos 6 objetos  o imágenes",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 18,
+                                "enunciado": "Sigue instrucciones de dos pasoos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 7": [
+                        {
+                                "item": 19,
+                                "enunciado": "Nombra cinco objetos de una imagen",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 20,
+                                "enunciado": "Utiliza mas de 20 palabras",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 21,
+                                "enunciado": "Usa frase de dos palabras",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 8": [
+                        {
+                                "item": 22,
+                                "enunciado": "Dice su nombre completo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 23,
+                                "enunciado": "Dice frases de 3 palabras",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 24,
+                                "enunciado": "Reconoce cualidades de los objetos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 9": [
+                        {
+                                "item": 25,
+                                "enunciado": "Define por su uso cinco objetos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 26,
+                                "enunciado": "Hace comparativos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 27,
+                                "enunciado": "Describle el dibujo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 10": [
+                        {
+                                "item": 28,
+                                "enunciado": "Reconoce 5 colores",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 29,
+                                "enunciado": "Responde a tres preguntas sobre un relato",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 30,
+                                "enunciado": "Elabora un relato a partir de una imagen",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 11": [
+                        {
+                                "item": 31,
+                                "enunciado": "Expresa opiniones",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 32,
+                                "enunciado": "Repite palabras con pronunciacion correcta",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 33,
+                                "enunciado": "Absurdos visuales",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 12": [
+                        {
+                                "item": 34,
+                                "enunciado": "Identifica palabras que inician con sonidos parecidos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 35,
+                                "enunciado": "Conoce: Ayer, hoy y mañana",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 36,
+                                "enunciado": "Ordena una  historia y la relata",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ]
+        },
+        "personalSocial": {
+                "Rango 1": [
+                        {
+                                "item": 1,
+                                "enunciado": "Se tranquiliza cuando se toma entre los brazos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 2,
+                                "enunciado": "Responde a las caricias",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 3,
+                                "enunciado": "El bebe ya esta registrado",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 2": [
+                        {
+                                "item": 4,
+                                "enunciado": "Reconoce la voz del cuidados principal",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 5,
+                                "enunciado": "Sonrisa social",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 6,
+                                "enunciado": "Responde a una conversacion",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 3": [
+                        {
+                                "item": 7,
+                                "enunciado": "Coge las manos del examinador",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 8,
+                                "enunciado": "Rie a carcajadas",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 9,
+                                "enunciado": "Busca la continuacion del juego",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 4": [
+                        {
+                                "item": 10,
+                                "enunciado": "Reacciona con desconfianza ante el extraño",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 11,
+                                "enunciado": "Busca apoyo del cuidador",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 12,
+                                "enunciado": "Reacciona a su imagen en el espejo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 5": [
+                        {
+                                "item": 13,
+                                "enunciado": "Participa en juegos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 14,
+                                "enunciado": "Muestra interes o intencion en alimentarse solo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 15,
+                                "enunciado": "Explora el entorno",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 6": [
+                        {
+                                "item": 16,
+                                "enunciado": "Seguimiento de rutinas",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 17,
+                                "enunciado": "Ayuda a desvestirse",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 18,
+                                "enunciado": "Señala 5 partes de su cuerpo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 7": [
+                        {
+                                "item": 19,
+                                "enunciado": "Acepta y tolera el contacto de su piel con diferentes texturas",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 20,
+                                "enunciado": "Expresa su satisfaccion cuando logra o consigue algo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 21,
+                                "enunciado": "Identifica emociones basicas en una imagen",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 8": [
+                        {
+                                "item": 22,
+                                "enunciado": "Identifica que es de el y que es de otros",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 23,
+                                "enunciado": "Dice nombres de las personas con quien vive o comparte",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 24,
+                                "enunciado": "Expresa verbalmente emociones basicas ( tristeza, alegria, miedo, rabia)",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 9": [
+                        {
+                                "item": 25,
+                                "enunciado": "Rechaza la ayuda del cuidados cuando desea, intenra o hace algo por si mismo",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 26,
+                                "enunciado": "Comparte juego con otros(as) niños(as)",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 27,
+                                "enunciado": "Reconoce las emociones baiscas de los otros(as)",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 10": [
+                        {
+                                "item": 28,
+                                "enunciado": "Puede vestirse y desvestirse solo (a).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 29,
+                                "enunciado": "Propone juegos.",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 30,
+                                "enunciado": "Sabe cuantos años tiene",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 11": [
+                        {
+                                "item": 31,
+                                "enunciado": "Participa en juegos respetando reglas y turnos",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 32,
+                                "enunciado": "Comenta vida familiar",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 33,
+                                "enunciado": "Colabora por iniciativa propia con actividades cotidianas",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ],
+                "Rango 12": [
+                        {
+                                "item": 34,
+                                "enunciado": "Manifiesta emocion ante acontencimientos importantes de su grupo social",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 35,
+                                "enunciado": "Reconocimientos de normas o prohibiciones",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        },
+                        {
+                                "item": 36,
+                                "enunciado": "Reconoce emociones complejas (culpa, pena, etc).",
+                                "valor_cumple": 1,
+                                "valor_no_cumple": 0
+                        }
+                ]
+        }
+};
+        
+        // Puntuaciones típicas desde Excel
+        const puntuacionesTipicas = {
+        "motricidadGruesa": {
+                "0": {
+                        "Rango 1": 2
+                },
+                "1": {
+                        "Rango 1": 13
+                },
+                "2": {
+                        "Rango 1": 25,
+                        "Rango 2": 11
+                },
+                "3": {
+                        "Rango 1": 36,
+                        "Rango 2": 21
+                },
+                "4": {
+                        "Rango 1": 48,
+                        "Rango 2": 31,
+                        "Rango 3": 8
+                },
+                "5": {
+                        "Rango 1": 59,
+                        "Rango 2": 41,
+                        "Rango 3": 16
+                },
+                "6": {
+                        "Rango 1": 71,
+                        "Rango 2": 51,
+                        "Rango 3": 25,
+                        "Rango 4": 8
+                },
+                "7": {
+                        "Rango 1": 82,
+                        "Rango 2": 61,
+                        "Rango 3": 33,
+                        "Rango 4": 15,
+                        "Rango 5": 2
+                },
+                "8": {
+                        "Rango 1": 93,
+                        "Rango 2": 72,
+                        "Rango 3": 42,
+                        "Rango 4": 22,
+                        "Rango 5": 9
+                },
+                "9": {
+                        "Rango 1": 105,
+                        "Rango 2": 82,
+                        "Rango 3": 50,
+                        "Rango 4": 29,
+                        "Rango 5": 15,
+                        "Rango 6": 1
+                },
+                "10": {
+                        "Rango 1": 116,
+                        "Rango 2": 92,
+                        "Rango 3": 58,
+                        "Rango 4": 37,
+                        "Rango 5": 22,
+                        "Rango 6": 6
+                },
+                "11": {
+                        "Rango 1": 128,
+                        "Rango 2": 102,
+                        "Rango 3": 67,
+                        "Rango 4": 44,
+                        "Rango 5": 28,
+                        "Rango 6": 12
+                },
+                "12": {
+                        "Rango 1": 139,
+                        "Rango 2": 112,
+                        "Rango 3": 75,
+                        "Rango 4": 51,
+                        "Rango 5": 35,
+                        "Rango 6": 17,
+                        "Rango 7": 3
+                },
+                "13": {
+                        "Rango 1": 150,
+                        "Rango 2": 122,
+                        "Rango 3": 84,
+                        "Rango 4": 58,
+                        "Rango 5": 41,
+                        "Rango 6": 23,
+                        "Rango 7": 8
+                },
+                "14": {
+                        "Rango 1": 162,
+                        "Rango 2": 132,
+                        "Rango 3": 92,
+                        "Rango 4": 66,
+                        "Rango 5": 47,
+                        "Rango 6": 29,
+                        "Rango 7": 13
+                },
+                "15": {
+                        "Rango 1": 173,
+                        "Rango 2": 143,
+                        "Rango 3": 100,
+                        "Rango 4": 73,
+                        "Rango 5": 54,
+                        "Rango 6": 34,
+                        "Rango 7": 18,
+                        "Rango 8": 3
+                },
+                "16": {
+                        "Rango 1": 185,
+                        "Rango 2": 153,
+                        "Rango 3": 109,
+                        "Rango 4": 80,
+                        "Rango 5": 60,
+                        "Rango 6": 40,
+                        "Rango 7": 23,
+                        "Rango 8": 7
+                },
+                "17": {
+                        "Rango 1": 196,
+                        "Rango 2": 163,
+                        "Rango 3": 117,
+                        "Rango 4": 88,
+                        "Rango 5": 67,
+                        "Rango 6": 46,
+                        "Rango 7": 28,
+                        "Rango 8": 12
+                },
+                "18": {
+                        "Rango 1": 208,
+                        "Rango 2": 173,
+                        "Rango 3": 126,
+                        "Rango 4": 95,
+                        "Rango 5": 73,
+                        "Rango 6": 51,
+                        "Rango 7": 33,
+                        "Rango 8": 16,
+                        "Rango 9": 2
+                },
+                "19": {
+                        "Rango 1": 219,
+                        "Rango 2": 183,
+                        "Rango 3": 134,
+                        "Rango 4": 102,
+                        "Rango 5": 80,
+                        "Rango 6": 57,
+                        "Rango 7": 38,
+                        "Rango 8": 21,
+                        "Rango 9": 6
+                },
+                "20": {
+                        "Rango 1": 230,
+                        "Rango 2": 193,
+                        "Rango 3": 142,
+                        "Rango 4": 109,
+                        "Rango 5": 86,
+                        "Rango 6": 63,
+                        "Rango 7": 43,
+                        "Rango 8": 25,
+                        "Rango 9": 11,
+                        "Rango 10": 2
+                },
+                "21": {
+                        "Rango 1": 242,
+                        "Rango 2": 204,
+                        "Rango 3": 151,
+                        "Rango 4": 117,
+                        "Rango 5": 93,
+                        "Rango 6": 68,
+                        "Rango 7": 48,
+                        "Rango 8": 30,
+                        "Rango 9": 15,
+                        "Rango 10": 7
+                },
+                "22": {
+                        "Rango 1": 253,
+                        "Rango 2": 214,
+                        "Rango 3": 159,
+                        "Rango 4": 124,
+                        "Rango 5": 99,
+                        "Rango 6": 74,
+                        "Rango 7": 53,
+                        "Rango 8": 34,
+                        "Rango 9": 19,
+                        "Rango 10": 11
+                },
+                "23": {
+                        "Rango 1": 265,
+                        "Rango 2": 224,
+                        "Rango 3": 168,
+                        "Rango 4": 131,
+                        "Rango 5": 106,
+                        "Rango 6": 80,
+                        "Rango 7": 58,
+                        "Rango 8": 39,
+                        "Rango 9": 24,
+                        "Rango 10": 16
+                },
+                "24": {
+                        "Rango 1": 276,
+                        "Rango 2": 234,
+                        "Rango 3": 176,
+                        "Rango 4": 138,
+                        "Rango 5": 112,
+                        "Rango 6": 85,
+                        "Rango 7": 63,
+                        "Rango 8": 43,
+                        "Rango 9": 28,
+                        "Rango 10": 20
+                },
+                "25": {
+                        "Rango 1": 287,
+                        "Rango 2": 244,
+                        "Rango 3": 185,
+                        "Rango 4": 146,
+                        "Rango 5": 119,
+                        "Rango 6": 91,
+                        "Rango 7": 68,
+                        "Rango 8": 48,
+                        "Rango 9": 33,
+                        "Rango 10": 25
+                },
+                "26": {
+                        "Rango 1": 299,
+                        "Rango 2": 254,
+                        "Rango 3": 193,
+                        "Rango 4": 153,
+                        "Rango 5": 125,
+                        "Rango 6": 97,
+                        "Rango 7": 73,
+                        "Rango 8": 52,
+                        "Rango 9": 37,
+                        "Rango 10": 30,
+                        "Rango 11": 4
+                },
+                "27": {
+                        "Rango 1": 310,
+                        "Rango 2": 265,
+                        "Rango 3": 201,
+                        "Rango 4": 160,
+                        "Rango 5": 132,
+                        "Rango 6": 102,
+                        "Rango 7": 78,
+                        "Rango 8": 57,
+                        "Rango 9": 41,
+                        "Rango 10": 34,
+                        "Rango 11": 10
+                },
+                "28": {
+                        "Rango 1": 322,
+                        "Rango 2": 275,
+                        "Rango 3": 210,
+                        "Rango 4": 167,
+                        "Rango 5": 138,
+                        "Rango 6": 108,
+                        "Rango 7": 83,
+                        "Rango 8": 61,
+                        "Rango 9": 46,
+                        "Rango 10": 39,
+                        "Rango 11": 17
+                },
+                "29": {
+                        "Rango 1": 333,
+                        "Rango 2": 285,
+                        "Rango 3": 218,
+                        "Rango 4": 175,
+                        "Rango 5": 144,
+                        "Rango 6": 114,
+                        "Rango 7": 88,
+                        "Rango 8": 66,
+                        "Rango 9": 50,
+                        "Rango 10": 43,
+                        "Rango 11": 23
+                },
+                "30": {
+                        "Rango 1": 345,
+                        "Rango 2": 295,
+                        "Rango 3": 227,
+                        "Rango 4": 182,
+                        "Rango 5": 151,
+                        "Rango 6": 119,
+                        "Rango 7": 93,
+                        "Rango 8": 70,
+                        "Rango 9": 54,
+                        "Rango 10": 48,
+                        "Rango 11": 30
+                },
+                "31": {
+                        "Rango 1": 356,
+                        "Rango 2": 305,
+                        "Rango 3": 235,
+                        "Rango 4": 189,
+                        "Rango 5": 157,
+                        "Rango 6": 125,
+                        "Rango 7": 98,
+                        "Rango 8": 75,
+                        "Rango 9": 59,
+                        "Rango 10": 53,
+                        "Rango 11": 36
+                },
+                "32": {
+                        "Rango 1": 367,
+                        "Rango 2": 315,
+                        "Rango 3": 243,
+                        "Rango 4": 197,
+                        "Rango 5": 164,
+                        "Rango 6": 131,
+                        "Rango 7": 103,
+                        "Rango 8": 79,
+                        "Rango 9": 63,
+                        "Rango 10": 57,
+                        "Rango 11": 43
+                },
+                "33": {
+                        "Rango 1": 379,
+                        "Rango 2": 325,
+                        "Rango 3": 252,
+                        "Rango 4": 204,
+                        "Rango 5": 170,
+                        "Rango 6": 136,
+                        "Rango 7": 108,
+                        "Rango 8": 84,
+                        "Rango 9": 68,
+                        "Rango 10": 62,
+                        "Rango 11": 49,
+                        "Rango 12": 11
+                },
+                "34": {
+                        "Rango 1": 390,
+                        "Rango 2": 336,
+                        "Rango 3": 260,
+                        "Rango 4": 211,
+                        "Rango 5": 177,
+                        "Rango 6": 142,
+                        "Rango 7": 113,
+                        "Rango 8": 88,
+                        "Rango 9": 72,
+                        "Rango 10": 66,
+                        "Rango 11": 56,
+                        "Rango 12": 24
+                },
+                "35": {
+                        "Rango 1": 402,
+                        "Rango 2": 346,
+                        "Rango 3": 269,
+                        "Rango 4": 218,
+                        "Rango 5": 183,
+                        "Rango 6": 148,
+                        "Rango 7": 118,
+                        "Rango 8": 93,
+                        "Rango 9": 76,
+                        "Rango 10": 71,
+                        "Rango 11": 62,
+                        "Rango 12": 37
+                },
+                "36": {
+                        "Rango 1": 413,
+                        "Rango 2": 356,
+                        "Rango 3": 277,
+                        "Rango 4": 226,
+                        "Rango 5": 190,
+                        "Rango 6": 153,
+                        "Rango 7": 123,
+                        "Rango 8": 97,
+                        "Rango 9": 81,
+                        "Rango 10": 78,
+                        "Rango 11": 69,
+                        "Rango 12": 51
+                }
+        },
+        "motricidadFina": {
+                "0": {
+                        "Rango 2": 4
+                },
+                "1": {
+                        "Rango 1": 12,
+                        "Rango 2": 11,
+                        "Rango 3": 5
+                },
+                "2": {
+                        "Rango 1": 32,
+                        "Rango 2": 19,
+                        "Rango 3": 11
+                },
+                "3": {
+                        "Rango 1": 52,
+                        "Rango 2": 26,
+                        "Rango 3": 17,
+                        "Rango 4": 2
+                },
+                "4": {
+                        "Rango 1": 72,
+                        "Rango 2": 33,
+                        "Rango 3": 23,
+                        "Rango 4": 8
+                },
+                "5": {
+                        "Rango 1": 92,
+                        "Rango 2": 40,
+                        "Rango 3": 29,
+                        "Rango 4": 15
+                },
+                "6": {
+                        "Rango 1": 112,
+                        "Rango 2": 47,
+                        "Rango 3": 34,
+                        "Rango 4": 21,
+                        "Rango 5": 7
+                },
+                "7": {
+                        "Rango 1": 132,
+                        "Rango 2": 55,
+                        "Rango 3": 40,
+                        "Rango 4": 27,
+                        "Rango 5": 13
+                },
+                "8": {
+                        "Rango 1": 152,
+                        "Rango 2": 62,
+                        "Rango 3": 46,
+                        "Rango 4": 33,
+                        "Rango 5": 20,
+                        "Rango 6": 5
+                },
+                "9": {
+                        "Rango 1": 172,
+                        "Rango 2": 69,
+                        "Rango 3": 52,
+                        "Rango 4": 39,
+                        "Rango 5": 26,
+                        "Rango 6": 11
+                },
+                "10": {
+                        "Rango 1": 192,
+                        "Rango 2": 76,
+                        "Rango 3": 58,
+                        "Rango 4": 46,
+                        "Rango 5": 32,
+                        "Rango 6": 17
+                },
+                "11": {
+                        "Rango 1": 212,
+                        "Rango 2": 83,
+                        "Rango 3": 64,
+                        "Rango 4": 52,
+                        "Rango 5": 39,
+                        "Rango 6": 23
+                },
+                "12": {
+                        "Rango 1": 232,
+                        "Rango 2": 91,
+                        "Rango 3": 70,
+                        "Rango 4": 58,
+                        "Rango 5": 45,
+                        "Rango 6": 29
+                },
+                "13": {
+                        "Rango 1": 252,
+                        "Rango 2": 98,
+                        "Rango 3": 76,
+                        "Rango 4": 64,
+                        "Rango 5": 52,
+                        "Rango 6": 34,
+                        "Rango 7": 7
+                },
+                "14": {
+                        "Rango 1": 272,
+                        "Rango 2": 105,
+                        "Rango 3": 82,
+                        "Rango 4": 70,
+                        "Rango 5": 58,
+                        "Rango 6": 40,
+                        "Rango 7": 14
+                },
+                "15": {
+                        "Rango 1": 292,
+                        "Rango 2": 112,
+                        "Rango 3": 88,
+                        "Rango 4": 77,
+                        "Rango 5": 65,
+                        "Rango 6": 46,
+                        "Rango 7": 21
+                },
+                "16": {
+                        "Rango 1": 312,
+                        "Rango 2": 119,
+                        "Rango 3": 94,
+                        "Rango 4": 83,
+                        "Rango 5": 71,
+                        "Rango 6": 52,
+                        "Rango 7": 28,
+                        "Rango 8": 4
+                },
+                "17": {
+                        "Rango 1": 332,
+                        "Rango 2": 127,
+                        "Rango 3": 100,
+                        "Rango 4": 89,
+                        "Rango 5": 77,
+                        "Rango 6": 58,
+                        "Rango 7": 35,
+                        "Rango 8": 10
+                },
+                "18": {
+                        "Rango 1": 352,
+                        "Rango 2": 134,
+                        "Rango 3": 106,
+                        "Rango 4": 95,
+                        "Rango 5": 84,
+                        "Rango 6": 64,
+                        "Rango 7": 42,
+                        "Rango 8": 16
+                },
+                "19": {
+                        "Rango 1": 372,
+                        "Rango 2": 121,
+                        "Rango 3": 112,
+                        "Rango 4": 101,
+                        "Rango 5": 90,
+                        "Rango 6": 70,
+                        "Rango 7": 50,
+                        "Rango 8": 23,
+                        "Rango 9": 1
+                },
+                "20": {
+                        "Rango 1": 392,
+                        "Rango 2": 148,
+                        "Rango 3": 118,
+                        "Rango 4": 108,
+                        "Rango 5": 97,
+                        "Rango 6": 76,
+                        "Rango 7": 57,
+                        "Rango 8": 29,
+                        "Rango 9": 6
+                },
+                "21": {
+                        "Rango 1": 412,
+                        "Rango 2": 155,
+                        "Rango 3": 124,
+                        "Rango 4": 114,
+                        "Rango 5": 103,
+                        "Rango 6": 82,
+                        "Rango 7": 64,
+                        "Rango 8": 35,
+                        "Rango 9": 11
+                },
+                "22": {
+                        "Rango 1": 432,
+                        "Rango 2": 163,
+                        "Rango 3": 130,
+                        "Rango 4": 120,
+                        "Rango 5": 110,
+                        "Rango 6": 88,
+                        "Rango 7": 71,
+                        "Rango 8": 41,
+                        "Rango 9": 17
+                },
+                "23": {
+                        "Rango 1": 452,
+                        "Rango 2": 170,
+                        "Rango 3": 136,
+                        "Rango 4": 126,
+                        "Rango 5": 116,
+                        "Rango 6": 94,
+                        "Rango 7": 78,
+                        "Rango 8": 47,
+                        "Rango 9": 22,
+                        "Rango 10": 4
+                },
+                "24": {
+                        "Rango 1": 472,
+                        "Rango 2": 177,
+                        "Rango 3": 142,
+                        "Rango 4": 132,
+                        "Rango 5": 122,
+                        "Rango 6": 100,
+                        "Rango 7": 85,
+                        "Rango 8": 53,
+                        "Rango 9": 28,
+                        "Rango 10": 11
+                },
+                "25": {
+                        "Rango 1": 492,
+                        "Rango 2": 184,
+                        "Rango 3": 148,
+                        "Rango 4": 139,
+                        "Rango 5": 129,
+                        "Rango 6": 106,
+                        "Rango 7": 93,
+                        "Rango 8": 59,
+                        "Rango 9": 33,
+                        "Rango 10": 17,
+                        "Rango 11": 5
+                },
+                "26": {
+                        "Rango 1": 512,
+                        "Rango 2": 191,
+                        "Rango 3": 154,
+                        "Rango 4": 145,
+                        "Rango 5": 135,
+                        "Rango 6": 112,
+                        "Rango 7": 100,
+                        "Rango 8": 65,
+                        "Rango 9": 39,
+                        "Rango 10": 23,
+                        "Rango 11": 11
+                },
+                "27": {
+                        "Rango 1": 532,
+                        "Rango 2": 199,
+                        "Rango 3": 160,
+                        "Rango 4": 151,
+                        "Rango 5": 142,
+                        "Rango 6": 118,
+                        "Rango 7": 107,
+                        "Rango 8": 71,
+                        "Rango 9": 44,
+                        "Rango 10": 30,
+                        "Rango 11": 17
+                },
+                "28": {
+                        "Rango 1": 552,
+                        "Rango 2": 206,
+                        "Rango 3": 166,
+                        "Rango 4": 157,
+                        "Rango 5": 148,
+                        "Rango 6": 124,
+                        "Rango 7": 114,
+                        "Rango 8": 77,
+                        "Rango 9": 49,
+                        "Rango 10": 36,
+                        "Rango 11": 23,
+                        "Rango 12": 9
+                },
+                "29": {
+                        "Rango 1": 572,
+                        "Rango 2": 213,
+                        "Rango 3": 172,
+                        "Rango 4": 163,
+                        "Rango 5": 155,
+                        "Rango 6": 130,
+                        "Rango 7": 121,
+                        "Rango 8": 83,
+                        "Rango 9": 55,
+                        "Rango 10": 43,
+                        "Rango 11": 29,
+                        "Rango 12": 18
+                },
+                "30": {
+                        "Rango 1": 592,
+                        "Rango 2": 220,
+                        "Rango 3": 178,
+                        "Rango 4": 170,
+                        "Rango 5": 161,
+                        "Rango 6": 136,
+                        "Rango 7": 129,
+                        "Rango 8": 89,
+                        "Rango 9": 60,
+                        "Rango 10": 49,
+                        "Rango 11": 35,
+                        "Rango 12": 28
+                },
+                "31": {
+                        "Rango 1": 612,
+                        "Rango 2": 227,
+                        "Rango 3": 184,
+                        "Rango 4": 176,
+                        "Rango 5": 168,
+                        "Rango 6": 142,
+                        "Rango 7": 136,
+                        "Rango 8": 96,
+                        "Rango 9": 66,
+                        "Rango 10": 55,
+                        "Rango 11": 41,
+                        "Rango 12": 37
+                },
+                "32": {
+                        "Rango 1": 632,
+                        "Rango 2": 235,
+                        "Rango 3": 190,
+                        "Rango 4": 182,
+                        "Rango 5": 174,
+                        "Rango 6": 148,
+                        "Rango 7": 143,
+                        "Rango 8": 102,
+                        "Rango 9": 71,
+                        "Rango 10": 62,
+                        "Rango 11": 47,
+                        "Rango 12": 46
+                },
+                "33": {
+                        "Rango 1": 652,
+                        "Rango 2": 242,
+                        "Rango 3": 196,
+                        "Rango 4": 188,
+                        "Rango 5": 180,
+                        "Rango 6": 154,
+                        "Rango 7": 150,
+                        "Rango 8": 108,
+                        "Rango 9": 77,
+                        "Rango 10": 68,
+                        "Rango 11": 53,
+                        "Rango 12": 55
+                },
+                "34": {
+                        "Rango 1": 672,
+                        "Rango 2": 249,
+                        "Rango 3": 202,
+                        "Rango 4": 194,
+                        "Rango 5": 187,
+                        "Rango 6": 160,
+                        "Rango 7": 157,
+                        "Rango 8": 114,
+                        "Rango 9": 82,
+                        "Rango 10": 75,
+                        "Rango 11": 59,
+                        "Rango 12": 64
+                },
+                "35": {
+                        "Rango 1": 692,
+                        "Rango 2": 256,
+                        "Rango 3": 208,
+                        "Rango 4": 201,
+                        "Rango 5": 193,
+                        "Rango 6": 166,
+                        "Rango 7": 164,
+                        "Rango 8": 120,
+                        "Rango 9": 88,
+                        "Rango 10": 81,
+                        "Rango 11": 65,
+                        "Rango 12": 73
+                },
+                "36": {
+                        "Rango 1": 712,
+                        "Rango 2": 263,
+                        "Rango 3": 214,
+                        "Rango 4": 207,
+                        "Rango 5": 200,
+                        "Rango 6": 172,
+                        "Rango 7": 172,
+                        "Rango 8": 126,
+                        "Rango 9": 93,
+                        "Rango 10": 87,
+                        "Rango 11": 71,
+                        "Rango 12": 82
+                }
+        },
+        "audicionLenguaje": {
+                "2": {
+                        "Rango 1": 10,
+                        "Rango 2": 3
+                },
+                "3": {
+                        "Rango 1": 20,
+                        "Rango 2": 12,
+                        "Rango 3": 1
+                },
+                "4": {
+                        "Rango 1": 30,
+                        "Rango 2": 22,
+                        "Rango 3": 9
+                },
+                "5": {
+                        "Rango 1": 40,
+                        "Rango 2": 31,
+                        "Rango 3": 17,
+                        "Rango 4": 6
+                },
+                "6": {
+                        "Rango 1": 50,
+                        "Rango 2": 40,
+                        "Rango 3": 25,
+                        "Rango 4": 13,
+                        "Rango 5": 4
+                },
+                "7": {
+                        "Rango 1": 60,
+                        "Rango 2": 49,
+                        "Rango 3": 33,
+                        "Rango 4": 20,
+                        "Rango 5": 11
+                },
+                "8": {
+                        "Rango 1": 70,
+                        "Rango 2": 58,
+                        "Rango 3": 41,
+                        "Rango 4": 27,
+                        "Rango 5": 17,
+                        "Rango 6": 5
+                },
+                "9": {
+                        "Rango 1": 80,
+                        "Rango 2": 67,
+                        "Rango 3": 49,
+                        "Rango 4": 34,
+                        "Rango 5": 23,
+                        "Rango 6": 11
+                },
+                "10": {
+                        "Rango 1": 90,
+                        "Rango 2": 77,
+                        "Rango 3": 56,
+                        "Rango 4": 42,
+                        "Rango 5": 30,
+                        "Rango 6": 16,
+                        "Rango 7": 3
+                },
+                "11": {
+                        "Rango 1": 100,
+                        "Rango 2": 86,
+                        "Rango 3": 64,
+                        "Rango 4": 49,
+                        "Rango 5": 36,
+                        "Rango 6": 22,
+                        "Rango 7": 8
+                },
+                "12": {
+                        "Rango 1": 110,
+                        "Rango 2": 95,
+                        "Rango 3": 72,
+                        "Rango 4": 56,
+                        "Rango 5": 43,
+                        "Rango 6": 28,
+                        "Rango 7": 13
+                },
+                "13": {
+                        "Rango 1": 120,
+                        "Rango 2": 104,
+                        "Rango 3": 80,
+                        "Rango 4": 63,
+                        "Rango 5": 49,
+                        "Rango 6": 34,
+                        "Rango 7": 18,
+                        "Rango 8": 1
+                },
+                "14": {
+                        "Rango 1": 130,
+                        "Rango 2": 113,
+                        "Rango 3": 88,
+                        "Rango 4": 70,
+                        "Rango 5": 56,
+                        "Rango 6": 39,
+                        "Rango 7": 23,
+                        "Rango 8": 5
+                },
+                "15": {
+                        "Rango 1": 140,
+                        "Rango 2": 123,
+                        "Rango 3": 96,
+                        "Rango 4": 77,
+                        "Rango 5": 62,
+                        "Rango 6": 45,
+                        "Rango 7": 28,
+                        "Rango 8": 10
+                },
+                "16": {
+                        "Rango 1": 150,
+                        "Rango 2": 132,
+                        "Rango 3": 104,
+                        "Rango 4": 84,
+                        "Rango 5": 69,
+                        "Rango 6": 51,
+                        "Rango 7": 34,
+                        "Rango 8": 15
+                },
+                "17": {
+                        "Rango 1": 160,
+                        "Rango 2": 141,
+                        "Rango 3": 112,
+                        "Rango 4": 91,
+                        "Rango 5": 75,
+                        "Rango 6": 57,
+                        "Rango 7": 39,
+                        "Rango 8": 19
+                },
+                "18": {
+                        "Rango 1": 170,
+                        "Rango 2": 150,
+                        "Rango 3": 120,
+                        "Rango 4": 98,
+                        "Rango 5": 82,
+                        "Rango 6": 63,
+                        "Rango 7": 44,
+                        "Rango 8": 24,
+                        "Rango 9": 4
+                },
+                "19": {
+                        "Rango 1": 180,
+                        "Rango 2": 159,
+                        "Rango 3": 128,
+                        "Rango 4": 105,
+                        "Rango 5": 88,
+                        "Rango 6": 68,
+                        "Rango 7": 49,
+                        "Rango 8": 29,
+                        "Rango 9": 8
+                },
+                "20": {
+                        "Rango 1": 190,
+                        "Rango 2": 168,
+                        "Rango 3": 136,
+                        "Rango 4": 113,
+                        "Rango 5": 94,
+                        "Rango 6": 74,
+                        "Rango 7": 54,
+                        "Rango 8": 33,
+                        "Rango 9": 13,
+                        "Rango 10": 2
+                },
+                "21": {
+                        "Rango 1": 200,
+                        "Rango 2": 178,
+                        "Rango 3": 144,
+                        "Rango 4": 120,
+                        "Rango 5": 101,
+                        "Rango 6": 80,
+                        "Rango 7": 59,
+                        "Rango 8": 38,
+                        "Rango 9": 17,
+                        "Rango 10": 6
+                },
+                "22": {
+                        "Rango 1": 210,
+                        "Rango 2": 187,
+                        "Rango 3": 152,
+                        "Rango 4": 127,
+                        "Rango 5": 107,
+                        "Rango 6": 86,
+                        "Rango 7": 65,
+                        "Rango 8": 43,
+                        "Rango 9": 22,
+                        "Rango 10": 11
+                },
+                "23": {
+                        "Rango 1": 220,
+                        "Rango 2": 196,
+                        "Rango 3": 160,
+                        "Rango 4": 134,
+                        "Rango 5": 114,
+                        "Rango 6": 91,
+                        "Rango 7": 70,
+                        "Rango 8": 47,
+                        "Rango 9": 26,
+                        "Rango 10": 15
+                },
+                "24": {
+                        "Rango 1": 230,
+                        "Rango 2": 205,
+                        "Rango 3": 168,
+                        "Rango 4": 141,
+                        "Rango 5": 120,
+                        "Rango 6": 97,
+                        "Rango 7": 75,
+                        "Rango 8": 52,
+                        "Rango 9": 31,
+                        "Rango 10": 20
+                },
+                "25": {
+                        "Rango 1": 240,
+                        "Rango 2": 214,
+                        "Rango 3": 176,
+                        "Rango 4": 148,
+                        "Rango 5": 127,
+                        "Rango 6": 103,
+                        "Rango 7": 80,
+                        "Rango 8": 57,
+                        "Rango 9": 35,
+                        "Rango 10": 25,
+                        "Rango 11": 1
+                },
+                "26": {
+                        "Rango 1": 250,
+                        "Rango 2": 224,
+                        "Rango 3": 184,
+                        "Rango 4": 155,
+                        "Rango 5": 133,
+                        "Rango 6": 109,
+                        "Rango 7": 85,
+                        "Rango 8": 61,
+                        "Rango 9": 40,
+                        "Rango 10": 29,
+                        "Rango 11": 7
+                },
+                "27": {
+                        "Rango 1": 260,
+                        "Rango 2": 233,
+                        "Rango 3": 192,
+                        "Rango 4": 162,
+                        "Rango 5": 140,
+                        "Rango 6": 114,
+                        "Rango 7": 90,
+                        "Rango 8": 66,
+                        "Rango 9": 44,
+                        "Rango 10": 34,
+                        "Rango 11": 12
+                },
+                "28": {
+                        "Rango 1": 270,
+                        "Rango 2": 242,
+                        "Rango 3": 200,
+                        "Rango 4": 169,
+                        "Rango 5": 146,
+                        "Rango 6": 120,
+                        "Rango 7": 96,
+                        "Rango 8": 71,
+                        "Rango 9": 49,
+                        "Rango 10": 38,
+                        "Rango 11": 18
+                },
+                "29": {
+                        "Rango 1": 280,
+                        "Rango 2": 251,
+                        "Rango 3": 208,
+                        "Rango 4": 176,
+                        "Rango 5": 153,
+                        "Rango 6": 126,
+                        "Rango 7": 101,
+                        "Rango 8": 75,
+                        "Rango 9": 53,
+                        "Rango 10": 43,
+                        "Rango 11": 24,
+                        "Rango 12": 6
+                },
+                "30": {
+                        "Rango 1": 290,
+                        "Rango 2": 260,
+                        "Rango 3": 216,
+                        "Rango 4": 184,
+                        "Rango 5": 159,
+                        "Rango 6": 132,
+                        "Rango 7": 106,
+                        "Rango 8": 80,
+                        "Rango 9": 58,
+                        "Rango 10": 48,
+                        "Rango 11": 29,
+                        "Rango 12": 14
+                },
+                "31": {
+                        "Rango 1": 300,
+                        "Rango 2": 270,
+                        "Rango 3": 224,
+                        "Rango 4": 191,
+                        "Rango 5": 166,
+                        "Rango 6": 137,
+                        "Rango 7": 111,
+                        "Rango 8": 85,
+                        "Rango 9": 62,
+                        "Rango 10": 52,
+                        "Rango 11": 35,
+                        "Rango 12": 22
+                },
+                "32": {
+                        "Rango 1": 310,
+                        "Rango 2": 279,
+                        "Rango 3": 232,
+                        "Rango 4": 198,
+                        "Rango 5": 172,
+                        "Rango 6": 143,
+                        "Rango 7": 116,
+                        "Rango 8": 89,
+                        "Rango 9": 67,
+                        "Rango 10": 57,
+                        "Rango 11": 41,
+                        "Rango 12": 31
+                },
+                "33": {
+                        "Rango 1": 320,
+                        "Rango 2": 288,
+                        "Rango 3": 240,
+                        "Rango 4": 205,
+                        "Rango 5": 178,
+                        "Rango 6": 149,
+                        "Rango 7": 121,
+                        "Rango 8": 94,
+                        "Rango 9": 71,
+                        "Rango 10": 62,
+                        "Rango 11": 46,
+                        "Rango 12": 39
+                },
+                "34": {
+                        "Rango 1": 330,
+                        "Rango 2": 297,
+                        "Rango 3": 248,
+                        "Rango 4": 212,
+                        "Rango 5": 185,
+                        "Rango 6": 155,
+                        "Rango 7": 127,
+                        "Rango 8": 99,
+                        "Rango 9": 76,
+                        "Rango 10": 66,
+                        "Rango 11": 52,
+                        "Rango 12": 47
+                },
+                "35": {
+                        "Rango 1": 340,
+                        "Rango 2": 306,
+                        "Rango 3": 256,
+                        "Rango 4": 219,
+                        "Rango 5": 191,
+                        "Rango 6": 161,
+                        "Rango 7": 132,
+                        "Rango 8": 104,
+                        "Rango 9": 80,
+                        "Rango 10": 71,
+                        "Rango 11": 58,
+                        "Rango 12": 55
+                },
+                "36": {
+                        "Rango 1": 350,
+                        "Rango 2": 315,
+                        "Rango 3": 264,
+                        "Rango 4": 226,
+                        "Rango 5": 198,
+                        "Rango 6": 166,
+                        "Rango 7": 137,
+                        "Rango 8": 108,
+                        "Rango 9": 85,
+                        "Rango 10": 75,
+                        "Rango 11": 63,
+                        "Rango 12": 64
+                }
+        },
+        "personalSocial": {
+                "1": {
+                        "Rango 1": 8,
+                        "Rango 2": 3
+                },
+                "2": {
+                        "Rango 1": 17,
+                        "Rango 2": 11,
+                        "Rango 3": 1
+                },
+                "3": {
+                        "Rango 1": 25,
+                        "Rango 2": 18,
+                        "Rango 3": 8
+                },
+                "4": {
+                        "Rango 1": 32,
+                        "Rango 2": 26,
+                        "Rango 3": 14,
+                        "Rango 4": 6
+                },
+                "5": {
+                        "Rango 1": 42,
+                        "Rango 2": 34,
+                        "Rango 3": 21,
+                        "Rango 4": 11,
+                        "Rango 5": 4
+                },
+                "6": {
+                        "Rango 1": 50,
+                        "Rango 2": 41,
+                        "Rango 3": 27,
+                        "Rango 4": 17,
+                        "Rango 5": 9
+                },
+                "7": {
+                        "Rango 1": 59,
+                        "Rango 2": 49,
+                        "Rango 3": 34,
+                        "Rango 4": 23,
+                        "Rango 5": 14,
+                        "Rango 6": 4
+                },
+                "8": {
+                        "Rango 1": 67,
+                        "Rango 2": 57,
+                        "Rango 3": 40,
+                        "Rango 4": 29,
+                        "Rango 5": 20,
+                        "Rango 6": 9
+                },
+                "9": {
+                        "Rango 1": 76,
+                        "Rango 2": 64,
+                        "Rango 3": 47,
+                        "Rango 4": 34,
+                        "Rango 5": 25,
+                        "Rango 6": 14,
+                        "Rango 7": 2
+                },
+                "10": {
+                        "Rango 1": 84,
+                        "Rango 2": 72,
+                        "Rango 3": 53,
+                        "Rango 4": 40,
+                        "Rango 5": 30,
+                        "Rango 6": 18,
+                        "Rango 7": 6
+                },
+                "11": {
+                        "Rango 1": 92,
+                        "Rango 2": 79,
+                        "Rango 3": 60,
+                        "Rango 4": 46,
+                        "Rango 5": 35,
+                        "Rango 6": 23,
+                        "Rango 7": 10
+                },
+                "12": {
+                        "Rango 1": 101,
+                        "Rango 2": 87,
+                        "Rango 3": 67,
+                        "Rango 4": 52,
+                        "Rango 5": 41,
+                        "Rango 6": 28,
+                        "Rango 7": 15
+                },
+                "13": {
+                        "Rango 1": 109,
+                        "Rango 2": 95,
+                        "Rango 3": 73,
+                        "Rango 4": 58,
+                        "Rango 5": 46,
+                        "Rango 6": 32,
+                        "Rango 7": 19,
+                        "Rango 8": 3
+                },
+                "14": {
+                        "Rango 1": 119,
+                        "Rango 2": 102,
+                        "Rango 3": 80,
+                        "Rango 4": 63,
+                        "Rango 5": 51,
+                        "Rango 6": 37,
+                        "Rango 7": 23,
+                        "Rango 8": 7
+                },
+                "15": {
+                        "Rango 1": 126,
+                        "Rango 2": 110,
+                        "Rango 3": 86,
+                        "Rango 4": 69,
+                        "Rango 5": 56,
+                        "Rango 6": 42,
+                        "Rango 7": 27,
+                        "Rango 8": 11
+                },
+                "16": {
+                        "Rango 1": 134,
+                        "Rango 2": 118,
+                        "Rango 3": 93,
+                        "Rango 4": 75,
+                        "Rango 5": 61,
+                        "Rango 6": 46,
+                        "Rango 7": 31,
+                        "Rango 8": 15
+                },
+                "17": {
+                        "Rango 1": 143,
+                        "Rango 2": 125,
+                        "Rango 3": 99,
+                        "Rango 4": 81,
+                        "Rango 5": 67,
+                        "Rango 6": 51,
+                        "Rango 7": 36,
+                        "Rango 8": 19
+                },
+                "18": {
+                        "Rango 1": 151,
+                        "Rango 2": 133,
+                        "Rango 3": 106,
+                        "Rango 4": 86,
+                        "Rango 5": 72,
+                        "Rango 6": 56,
+                        "Rango 7": 40,
+                        "Rango 8": 22,
+                        "Rango 9": 3
+                },
+                "19": {
+                        "Rango 1": 160,
+                        "Rango 2": 141,
+                        "Rango 3": 112,
+                        "Rango 4": 92,
+                        "Rango 5": 77,
+                        "Rango 6": 60,
+                        "Rango 7": 44,
+                        "Rango 8": 26,
+                        "Rango 9": 7
+                },
+                "20": {
+                        "Rango 1": 168,
+                        "Rango 2": 148,
+                        "Rango 3": 119,
+                        "Rango 4": 98,
+                        "Rango 5": 82,
+                        "Rango 6": 65,
+                        "Rango 7": 48,
+                        "Rango 8": 30,
+                        "Rango 9": 11
+                },
+                "21": {
+                        "Rango 1": 176,
+                        "Rango 2": 156,
+                        "Rango 3": 125,
+                        "Rango 4": 104,
+                        "Rango 5": 88,
+                        "Rango 6": 70,
+                        "Rango 7": 52,
+                        "Rango 8": 34,
+                        "Rango 9": 15,
+                        "Rango 10": 3
+                },
+                "22": {
+                        "Rango 1": 185,
+                        "Rango 2": 163,
+                        "Rango 3": 132,
+                        "Rango 4": 110,
+                        "Rango 5": 93,
+                        "Rango 6": 74,
+                        "Rango 7": 57,
+                        "Rango 8": 38,
+                        "Rango 9": 19,
+                        "Rango 10": 7
+                },
+                "23": {
+                        "Rango 1": 193,
+                        "Rango 2": 171,
+                        "Rango 3": 138,
+                        "Rango 4": 115,
+                        "Rango 5": 98,
+                        "Rango 6": 79,
+                        "Rango 7": 61,
+                        "Rango 8": 42,
+                        "Rango 9": 23,
+                        "Rango 10": 12
+                },
+                "24": {
+                        "Rango 1": 202,
+                        "Rango 2": 179,
+                        "Rango 3": 145,
+                        "Rango 4": 121,
+                        "Rango 5": 103,
+                        "Rango 6": 84,
+                        "Rango 7": 65,
+                        "Rango 8": 46,
+                        "Rango 9": 27,
+                        "Rango 10": 16
+                },
+                "25": {
+                        "Rango 1": 210,
+                        "Rango 2": 186,
+                        "Rango 3": 152,
+                        "Rango 4": 127,
+                        "Rango 5": 109,
+                        "Rango 6": 88,
+                        "Rango 7": 69,
+                        "Rango 8": 50,
+                        "Rango 9": 31,
+                        "Rango 10": 20
+                },
+                "26": {
+                        "Rango 1": 218,
+                        "Rango 2": 194,
+                        "Rango 3": 158,
+                        "Rango 4": 133,
+                        "Rango 5": 114,
+                        "Rango 6": 93,
+                        "Rango 7": 74,
+                        "Rango 8": 54,
+                        "Rango 9": 35,
+                        "Rango 10": 24
+                },
+                "27": {
+                        "Rango 1": 227,
+                        "Rango 2": 202,
+                        "Rango 3": 165,
+                        "Rango 4": 138,
+                        "Rango 5": 119,
+                        "Rango 6": 98,
+                        "Rango 7": 78,
+                        "Rango 8": 57,
+                        "Rango 9": 39,
+                        "Rango 10": 29
+                },
+                "28": {
+                        "Rango 1": 235,
+                        "Rango 2": 209,
+                        "Rango 3": 171,
+                        "Rango 4": 144,
+                        "Rango 5": 124,
+                        "Rango 6": 102,
+                        "Rango 7": 82,
+                        "Rango 8": 61,
+                        "Rango 9": 43,
+                        "Rango 10": 33,
+                        "Rango 11": 6
+                },
+                "29": {
+                        "Rango 1": 244,
+                        "Rango 2": 217,
+                        "Rango 3": 178,
+                        "Rango 4": 150,
+                        "Rango 5": 130,
+                        "Rango 6": 107,
+                        "Rango 7": 86,
+                        "Rango 8": 65,
+                        "Rango 9": 47,
+                        "Rango 10": 37,
+                        "Rango 11": 12
+                },
+                "30": {
+                        "Rango 1": 252,
+                        "Rango 2": 225,
+                        "Rango 3": 184,
+                        "Rango 4": 156,
+                        "Rango 5": 135,
+                        "Rango 6": 112,
+                        "Rango 7": 90,
+                        "Rango 8": 69,
+                        "Rango 9": 50,
+                        "Rango 10": 41,
+                        "Rango 11": 19
+                },
+                "31": {
+                        "Rango 1": 260,
+                        "Rango 2": 232,
+                        "Rango 3": 191,
+                        "Rango 4": 162,
+                        "Rango 5": 140,
+                        "Rango 6": 116,
+                        "Rango 7": 95,
+                        "Rango 8": 73,
+                        "Rango 9": 54,
+                        "Rango 10": 46,
+                        "Rango 11": 26
+                },
+                "32": {
+                        "Rango 1": 269,
+                        "Rango 2": 240,
+                        "Rango 3": 197,
+                        "Rango 4": 167,
+                        "Rango 5": 145,
+                        "Rango 6": 121,
+                        "Rango 7": 99,
+                        "Rango 8": 77,
+                        "Rango 9": 58,
+                        "Rango 10": 50,
+                        "Rango 11": 33
+                },
+                "33": {
+                        "Rango 1": 277,
+                        "Rango 2": 248,
+                        "Rango 3": 204,
+                        "Rango 4": 173,
+                        "Rango 5": 150,
+                        "Rango 6": 126,
+                        "Rango 7": 103,
+                        "Rango 8": 81,
+                        "Rango 9": 62,
+                        "Rango 10": 54,
+                        "Rango 11": 39,
+                        "Rango 12": 18
+                },
+                "34": {
+                        "Rango 1": 286,
+                        "Rango 2": 255,
+                        "Rango 3": 210,
+                        "Rango 4": 179,
+                        "Rango 5": 156,
+                        "Rango 6": 130,
+                        "Rango 7": 107,
+                        "Rango 8": 85,
+                        "Rango 9": 66,
+                        "Rango 10": 58,
+                        "Rango 11": 46,
+                        "Rango 12": 39
+                },
+                "35": {
+                        "Rango 1": 294,
+                        "Rango 2": 263,
+                        "Rango 3": 217,
+                        "Rango 4": 185,
+                        "Rango 5": 161,
+                        "Rango 6": 135,
+                        "Rango 7": 111,
+                        "Rango 8": 89,
+                        "Rango 9": 70,
+                        "Rango 10": 62,
+                        "Rango 11": 53,
+                        "Rango 12": 61
+                },
+                "36": {
+                        "Rango 1": 302,
+                        "Rango 2": 270,
+                        "Rango 3": 223,
+                        "Rango 4": 190,
+                        "Rango 5": 166,
+                        "Rango 6": 140,
+                        "Rango 7": 116,
+                        "Rango 8": 92,
+                        "Rango 9": 74,
+                        "Rango 10": 67,
+                        "Rango 11": 59,
+                        "Rango 12": 82
+                }
+        }
+};
+        
+        // Mapeo de rangos de edad a rangos de Excel
+        const mapeoRangosEdad = {
+            '0-1 mes': 'Rango 1',
+            '1-3 meses': 'Rango 2', 
+            '3-6 meses': 'Rango 3',
+            '6-9 meses': 'Rango 4',
+            '9-12 meses': 'Rango 5',
+            '12-18 meses': 'Rango 6',
+            '18-24 meses': 'Rango 7',
+            '24-36 meses': 'Rango 8',
+            '36-48 meses': 'Rango 9',
+            '48-60 meses': 'Rango 10',
+            '60-72 meses': 'Rango 11',
+            '72-84 meses': 'Rango 12'
+        };
+        
+        console.log("📊 Datos cargados:", {
+            areas: Object.keys(datosCompletos),
+            puntuaciones: Object.keys(puntuacionesTipicas),
+            mapeoRangos: Object.keys(mapeoRangosEdad)
+        });
+        
+        // Función para mostrar errores
+        function mostrarError(campo, mensaje) {
+            const errorDiv = document.getElementById(`error${campo}`);
+            errorDiv.textContent = mensaje;
+            errorDiv.classList.remove('hidden');
+        }
+        
+        // Función para limpiar errores
+        function limpiarErrores() {
+            const errores = ['Nombre', 'Apellidos', 'Fecha', 'Semanas', 'Genero'];
+            errores.forEach(campo => {
+                const errorDiv = document.getElementById(`error${campo}`);
+                errorDiv.classList.add('hidden');
+            });
+        }
+        
+        // Función para mostrar mensaje de éxito
+        function mostrarMensaje(mensaje) {
+            const mensajeDiv = document.getElementById('mensajeEstado');
+            mensajeDiv.textContent = mensaje;
+            mensajeDiv.classList.remove('hidden');
+            setTimeout(() => {
+                mensajeDiv.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Función para calcular edad CORREGIDA (RESTANDO SEMANAS FALTANTES)
+        function calcularEdad(fechaNacimiento, semanasGestacion) {
+            const nacimiento = new Date(fechaNacimiento);
+            const hoy = new Date();
+            
+            // 1. CALCULAR EDAD CRONOLÓGICA (fecha actual - fecha nacimiento)
+            let añosCronologicos = hoy.getFullYear() - nacimiento.getFullYear();
+            let mesesCronologicos = hoy.getMonth() - nacimiento.getMonth();
+            let diasCronologicos = hoy.getDate() - nacimiento.getDate();
+            
+            // Ajustar días negativos
+            if (diasCronologicos < 0) {
+                mesesCronologicos--;
+                const ultimoDiaMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0).getDate();
+                diasCronologicos += ultimoDiaMesAnterior;
+            }
+            
+            // Ajustar meses negativos
+            if (mesesCronologicos < 0) {
+                añosCronologicos--;
+                mesesCronologicos += 12;
+            }
+            
+            // 2. CALCULAR EDAD CORREGIDA (RESTAR SEMANAS FALTANTES PARA 40 SEMANAS)
+            const semanasFaltantes = 40 - parseInt(semanasGestacion);
+            const diasFaltantes = semanasFaltantes * 7; // Convertir semanas a días
+            
+            console.log('📊 CÁLCULO DE EDADES:', {
+                fechaNacimiento: fechaNacimiento,
+                fechaActual: hoy.toISOString().split('T')[0],
+                semanasGestacion: parseInt(semanasGestacion),
+                semanasFaltantes: semanasFaltantes,
+                diasFaltantes: diasFaltantes,
+                edadCronologicaAntes: `${añosCronologicos}a ${mesesCronologicos}m ${diasCronologicos}d`
+            });
+            
+            // RESTAR días faltantes de la edad cronológica
+            let diasCorregidos = diasCronologicos - diasFaltantes;
+            let mesesCorregidos = mesesCronologicos;
+            let añosCorregidos = añosCronologicos;
+            
+            // Ajustar días negativos en edad corregida
+            while (diasCorregidos < 0) {
+                mesesCorregidos--;
+                diasCorregidos += 30; // Aproximación de días por mes
+            }
+            
+            // Ajustar meses negativos en edad corregida
+            while (mesesCorregidos < 0) {
+                añosCorregidos--;
+                mesesCorregidos += 12;
+            }
+            
+            console.log('📊 RESULTADO FINAL:', {
+                edadCronologica: `${añosCronologicos}a ${mesesCronologicos}m ${diasCronologicos}d`,
+                edadCorregida: `${añosCorregidos}a ${mesesCorregidos}m ${diasCorregidos}d`,
+                semanasFaltantes: semanasFaltantes,
+                diasFaltantes: diasFaltantes
+            });
+            
+            return {
+                cronologica: { 
+                    años: añosCronologicos, 
+                    meses: mesesCronologicos, 
+                    dias: diasCronologicos 
+                },
+                corregida: { 
+                    años: añosCorregidos, 
+                    meses: mesesCorregidos, 
+                    dias: diasCorregidos 
+                }
+            };
+        }
+        
+        // Función para convertir edad a meses
+        function convertirEdadAMeses(edad) {
+            const mesesCompletos = edad.años * 12 + edad.meses;
+            const diasAMeses = edad.dias / 30.44;
+            return mesesCompletos + diasAMeses;
+        }
+        
+        // Función para obtener rango de edad
+        function obtenerRangoEdad(edadEnMeses) {
+            if (edadEnMeses < 1) return '0-1 mes';
+            if (edadEnMeses < 3) return '1-3 meses';
+            if (edadEnMeses < 6) return '3-6 meses';
+            if (edadEnMeses < 9) return '6-9 meses';
+            if (edadEnMeses < 12) return '9-12 meses';
+            if (edadEnMeses < 18) return '12-18 meses';
+            if (edadEnMeses < 24) return '18-24 meses';
+            if (edadEnMeses < 36) return '24-36 meses';
+            if (edadEnMeses < 48) return '36-48 meses';
+            if (edadEnMeses < 60) return '48-60 meses';
+            if (edadEnMeses < 72) return '60-72 meses';
+            return '72-84 meses';
+        }
+        
+        // Función principal de iniciar evaluación
+        function iniciarEvaluacion() {
+            console.log("🚀 INICIANDO EVALUACIÓN...");
+            
+            try {
+                // Limpiar errores anteriores
+                limpiarErrores();
+                
+                // Obtener valores
+                const nombre = document.getElementById('nombre').value.trim();
+                const apellidos = document.getElementById('apellidos').value.trim();
+                const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+                const semanasGestacion = document.getElementById('semanasGestacion').value;
+                const genero = document.getElementById('genero').value;
+                
+                // Validación
+                let hayErrores = false;
+                
+                if (!nombre) {
+                    mostrarError('Nombre', 'El nombre es obligatorio');
+                    hayErrores = true;
+                }
+                
+                if (!apellidos) {
+                    mostrarError('Apellidos', 'Los apellidos son obligatorios');
+                    hayErrores = true;
+                }
+                
+                if (!fechaNacimiento) {
+                    mostrarError('Fecha', 'La fecha de nacimiento es obligatoria');
+                    hayErrores = true;
+                } else {
+                    // Verificar que la fecha no sea futura
+                    const fechaNac = new Date(fechaNacimiento);
+                    const hoy = new Date();
+                    if (fechaNac > hoy) {
+                        mostrarError('Fecha', 'La fecha de nacimiento no puede ser futura');
+                        hayErrores = true;
+                    }
+                }
+                
+                if (!semanasGestacion) {
+                    mostrarError('Semanas', 'Las semanas de gestación son obligatorias');
+                    hayErrores = true;
+                } else {
+                    const semanas = parseInt(semanasGestacion);
+                    if (semanas < 20 || semanas > 45) {
+                        mostrarError('Semanas', 'Las semanas de gestación deben estar entre 20 y 45');
+                        hayErrores = true;
+                    }
+                }
+                
+                if (!genero) {
+                    mostrarError('Genero', 'El género es obligatorio');
+                    hayErrores = true;
+                }
+                
+                if (hayErrores) {
+                    console.log("❌ Errores de validación encontrados");
+                    return;
+                }
+                
+                // Guardar datos
+                datosPaciente = {
+                    nombre, apellidos, fechaNacimiento, semanasGestacion, genero
+                };
+                
+                // Calcular edades con lógica corregida
+                edadCalculada = calcularEdad(fechaNacimiento, semanasGestacion);
+                const edadEnMeses = convertirEdadAMeses(edadCalculada.corregida);
+                const rangoEdad = obtenerRangoEdad(edadEnMeses);
+                
+                console.log('🔍 RESUMEN DE EVALUACIÓN:', {
+                    datosPaciente: datosPaciente,
+                    edadCronologica: `${edadCalculada.cronologica.años}a ${edadCalculada.cronologica.meses}m ${edadCalculada.cronologica.dias}d`,
+                    edadCorregida: `${edadCalculada.corregida.años}a ${edadCalculada.corregida.meses}m ${edadCalculada.corregida.dias}d`,
+                    edadEnMeses: edadEnMeses.toFixed(2),
+                    rangoEdad: rangoEdad,
+                    semanasGestacion: parseInt(semanasGestacion),
+                    semanasFaltantes: 40 - parseInt(semanasGestacion)
+                });
+                
+                // Mostrar información en la interfaz
+                document.getElementById('edadCronologica').textContent = 
+                    `${edadCalculada.cronologica.años}a ${edadCalculada.cronologica.meses}m ${Math.floor(edadCalculada.cronologica.dias)}d`;
+                document.getElementById('edadCorregida').textContent = 
+                    `${edadCalculada.corregida.años}a ${edadCalculada.corregida.meses}m ${Math.floor(edadCalculada.corregida.dias)}d`;
+                document.getElementById('rangoEdad').textContent = rangoEdad;
+                
+                // Mostrar secciones
+                document.getElementById('infoEdades').classList.remove('hidden');
+                document.getElementById('seleccionAreas').classList.remove('hidden');
+                
+                // Mostrar mensaje de éxito
+                mostrarMensaje('✅ Evaluación iniciada correctamente');
+                
+                console.log('✅ Evaluación iniciada correctamente');
+                
+            } catch (error) {
+                console.error('❌ Error en iniciarEvaluacion:', error);
+                mostrarMensaje('❌ Error al iniciar evaluación: ' + error.message);
+            }
+        }
+        
+        // Función para seleccionar área
+        function seleccionarArea(area) {
+            // Verificar si el área ya está completada
+            if (areasCompletadas.includes(area)) {
+                console.log('⚠️ Área ya completada:', area);
+                alert('Esta área ya ha sido completada. Selecciona otra área.');
+                return;
+            }
+            
+            areaActual = area;
+            console.log('🎯 Área seleccionada:', area);
+            
+            // Actualizar etiqueta dinámicamente
+            const nombresAreas = {
+                'motricidadGruesa': 'Motricidad Gruesa',
+                'motricidadFina': 'Motricidad Fina',
+                'audicionLenguaje': 'Audición y Lenguaje',
+                'personalSocial': 'Personal Social'
+            };
+            
+            document.getElementById('tituloArea').textContent = `Evaluación de ${nombresAreas[area]}`;
+            
+            // Obtener todos los items del área ordenados por rango
+            todosLosItemsArea = [];
+            rangosOrdenados = [];
+            
+            // Crear lista ordenada de rangos
+            const ordenRangos = ['Rango 1', 'Rango 2', 'Rango 3', 'Rango 4', 'Rango 5', 'Rango 6', 
+                               'Rango 7', 'Rango 8', 'Rango 9', 'Rango 10', 'Rango 11', 'Rango 12'];
+            
+            ordenRangos.forEach(rango => {
+                if (datosCompletos[area] && datosCompletos[area][rango]) {
+                    rangosOrdenados.push(rango);
+                    datosCompletos[area][rango].forEach(item => {
+                        todosLosItemsArea.push({
+                            ...item,
+                            rango: rango,
+                            completado: false,
+                            resultado: null
+                        });
+                    });
+                }
+            });
+            
+            // Determinar rango inicial según edad corregida
+            const edadEnMeses = convertirEdadAMeses(edadCalculada.corregida);
+            const rangoEdad = obtenerRangoEdad(edadEnMeses);
+            const rangoExcelInicial = mapeoRangosEdad[rangoEdad];
+            
+            // Encontrar índice del rango inicial
+            indiceRangoActual = rangosOrdenados.indexOf(rangoExcelInicial);
+            if (indiceRangoActual === -1) {
+                indiceRangoActual = 0; // Si no se encuentra, empezar desde el primero
+            }
+            
+            rangoActual = rangosOrdenados[indiceRangoActual];
+            
+            // Cargar items del rango inicial
+            cargarItemsRangoActual();
+            
+            console.log(`📋 Área ${nombresAreas[area]} cargada:`, {
+                totalItems: todosLosItemsArea.length,
+                rangosDisponibles: rangosOrdenados.length,
+                rangoInicial: rangoActual,
+                indiceRangoInicial: indiceRangoActual,
+                edadCorregida: `${edadCalculada.corregida.años}a ${edadCalculada.corregida.meses}m ${edadCalculada.corregida.dias}d`,
+                rangoEdad: rangoEdad
+            });
+            
+            // Mostrar evaluación
+            document.getElementById('evaluacionArea').classList.remove('hidden');
+            document.getElementById('itemsEvaluados').classList.remove('hidden');
+            document.getElementById('alertaDosConsecutivos').classList.add('hidden');
+            document.getElementById('infoPuntuacionDirecta').classList.add('hidden');
+            
+            mostrarItemActual();
+            actualizarEstadoEvaluacion();
+        }
+        
+        // Función para cargar items del rango actual
+        function cargarItemsRangoActual() {
+            itemsAreaActual = todosLosItemsArea.filter(item => item.rango === rangoActual);
+            indiceItemActual = 0;
+            
+            console.log(`📋 Rango ${rangoActual} cargado:`, {
+                itemsEnRango: itemsAreaActual.length,
+                items: itemsAreaActual.map(i => i.item)
+            });
+            
+            // Actualizar información del rango
+            document.getElementById('rangoActual').textContent = rangoActual;
+            document.getElementById('totalItemsRango').textContent = itemsAreaActual.length;
+            
+            actualizarProgreso();
+        }
+        
+        // Función para actualizar progreso
+        function actualizarProgreso() {
+            const itemsEvaluadosArea = itemsEvaluados.filter(item => item.area === areaActual);
+            const totalItemsArea = todosLosItemsArea.length;
+            const progresoPorcentaje = Math.round((itemsEvaluadosArea.length / totalItemsArea) * 100);
+            
+            document.getElementById('progresoAreaTexto').textContent = `${progresoPorcentaje}%`;
+            document.getElementById('barraProgresoArea').style.width = `${progresoPorcentaje}%`;
+            
+            const itemActual = indiceItemActual + 1;
+            const totalRango = itemsAreaActual.length;
+            document.getElementById('numeroItem').textContent = itemActual;
+            document.getElementById('progresoTexto').textContent = `${itemActual}/${totalRango} items del rango`;
+        }
+        
+        // Función para mostrar el item actual
+        function mostrarItemActual() {
+            if (indiceItemActual < itemsAreaActual.length) {
+                const item = itemsAreaActual[indiceItemActual];
+                document.getElementById('enunciadoItem').textContent = 
+                    `Item ${item.item}: ${item.enunciado}`;
+                actualizarProgreso();
+            } else {
+                // No hay más items en este rango, cambiar al siguiente
+                cambiarAlSiguienteRango();
+            }
+        }
+        
+        // Función para cambiar al siguiente rango
+        function cambiarAlSiguienteRango() {
+            if (indiceRangoActual < rangosOrdenados.length - 1) {
+                indiceRangoActual++;
+                rangoActual = rangosOrdenados[indiceRangoActual];
+                cargarItemsRangoActual();
+                mostrarItemActual();
+                console.log(`🔄 Cambiando al siguiente rango: ${rangoActual}`);
+            } else {
+                // No hay más rangos, finalizar área
+                console.log('🏁 No hay más rangos disponibles - Finalizando área');
+                finalizarArea();
+            }
+        }
+        
+        // Función MEJORADA para evaluar un item con lógica robusta de dos consecutivos
+        function evaluarItem(cumple) {
+            if (indiceItemActual < itemsAreaActual.length) {
+                const item = itemsAreaActual[indiceItemActual];
+                item.completado = true;
+                item.resultado = cumple;
+                
+                itemsEvaluados.push({
+                    ...item,
+                    area: areaActual,
+                    indice: indiceItemActual,
+                    rangoEvaluado: rangoActual
+                });
+                
+                console.log('📝 ITEM EVALUADO:', {
+                    item: item.item,
+                    enunciado: item.enunciado,
+                    resultado: cumple ? 'Cumple' : 'No cumple',
+                    area: areaActual,
+                    rango: rangoActual,
+                    valor_cumple: item.valor_cumple,
+                    valor_no_cumple: item.valor_no_cumple
+                });
+                
+                // LÓGICA MEJORADA: Verificar condición de parada (dos "No cumple" consecutivos)
+                if (!cumple) {
+                    const itemsAreaEvaluados = itemsEvaluados.filter(i => i.area === areaActual);
+                    
+                    // Verificar si hay al menos 2 items evaluados
+                    if (itemsAreaEvaluados.length >= 2) {
+                        const ultimosItems = itemsAreaEvaluados.slice(-2);
+                        
+                        console.log('🔍 VERIFICANDO CONDICIÓN DE PARADA:', {
+                            totalItemsEvaluados: itemsAreaEvaluados.length,
+                            ultimosItems: ultimosItems.map(i => ({
+                                item: i.item, 
+                                resultado: i.resultado, 
+                                rango: i.rango,
+                                texto: i.resultado ? 'Cumple' : 'No cumple'
+                            })),
+                            dosNoCumpleConsecutivos: ultimosItems.every(i => i.resultado === false)
+                        });
+                        
+                        // Verificar si los últimos 2 items son "No cumple"
+                        if (ultimosItems.every(i => i.resultado === false)) {
+                            console.log('🛑 DOS "NO CUMPLE" CONSECUTIVOS DETECTADOS - Finalizando área');
+                            
+                            // Mostrar alerta
+                            document.getElementById('alertaDosConsecutivos').classList.remove('hidden');
+                            
+                            // Finalizar área inmediatamente
+                            setTimeout(() => {
+                                finalizarArea();
+                            }, 1000);
+                            
+                            return;
+                        }
+                    }
+                }
+                
+                indiceItemActual++;
+                mostrarItemActual();
+                actualizarListaItems();
+            }
+        }
+        
+        // Función para ir al item anterior
+        function itemAnterior() {
+            if (indiceItemActual > 0) {
+                indiceItemActual--;
+                mostrarItemActual();
+            } else {
+                // Si estamos en el primer item del rango, ir al rango anterior
+                if (indiceRangoActual > 0) {
+                    indiceRangoActual--;
+                    rangoActual = rangosOrdenados[indiceRangoActual];
+                    cargarItemsRangoActual();
+                    indiceItemActual = itemsAreaActual.length - 1; // Último item del rango anterior
+                    mostrarItemActual();
+                    console.log(`⬅️ Retrocediendo al rango anterior: ${rangoActual}`);
+                }
+            }
+        }
+        
+        // Función para cambiar de rango manualmente
+        function cambiarRango() {
+            const mensaje = `Rangos disponibles:\n${rangosOrdenados.map((rango, index) => `${index + 1}. ${rango}`).join('\n')}\n\nRango actual: ${rangoActual}\n\n¿A qué rango deseas cambiar?`;
+            const nuevoIndice = prompt(mensaje);
+            
+            if (nuevoIndice && !isNaN(nuevoIndice)) {
+                const indice = parseInt(nuevoIndice) - 1;
+                if (indice >= 0 && indice < rangosOrdenados.length) {
+                    indiceRangoActual = indice;
+                    rangoActual = rangosOrdenados[indiceRangoActual];
+                    cargarItemsRangoActual();
+                    mostrarItemActual();
+                    console.log(`🔄 Cambiando manualmente al rango: ${rangoActual}`);
+                } else {
+                    alert('Número de rango inválido');
+                }
+            }
+        }
+        
+        // Función para cambiar de área
+        function cambiarArea() {
+            document.getElementById('evaluacionArea').classList.add('hidden');
+            document.getElementById('seleccionAreas').classList.remove('hidden');
+            document.getElementById('alertaDosConsecutivos').classList.add('hidden');
+            document.getElementById('infoPuntuacionDirecta').classList.add('hidden');
+        }
+        
+        // Función CORREGIDA para obtener puntuación típica desde Excel
+        function obtenerPuntuacionTipicaExcel(area, puntuacionDirecta, rangoExcel) {
+            console.log('🔍 OBTENIENDO PUNTUACIÓN TÍPICA:', {
+                area: area,
+                puntuacionDirecta: puntuacionDirecta,
+                rangoExcel: rangoExcel
+            });
+            
+            if (puntuacionesTipicas[area] && puntuacionesTipicas[area][puntuacionDirecta]) {
+                const puntuacionesRango = puntuacionesTipicas[area][puntuacionDirecta];
+                
+                if (puntuacionesRango[rangoExcel]) {
+                    const puntuacionTipica = puntuacionesRango[rangoExcel];
+                    console.log('✅ Puntuación típica encontrada:', puntuacionTipica);
+                    return puntuacionTipica;
+                } else {
+                    console.log('⚠️  No se encontró puntuación típica para el rango:', rangoExcel);
+                    console.log('📋 Rangos disponibles:', Object.keys(puntuacionesRango));
+                }
+            } else {
+                console.log('⚠️  No se encontró puntuación directa:', puntuacionDirecta);
+                console.log('📋 Puntuaciones directas disponibles:', Object.keys(puntuacionesTipicas[area] || {}));
+            }
+            
+            // Fallback: calcular puntuación típica aproximada
+            const puntuacionAproximada = Math.round(puntuacionDirecta * 12);
+            console.log('🔧 Usando puntuación aproximada:', puntuacionAproximada);
+            return puntuacionAproximada;
+        }
+        
+        // Función CORREGIDA para calcular puntuación directa
+        function calcularPuntuacionDirectaCorregida(itemsAreaEvaluados) {
+            console.log('📊 CALCULANDO PUNTUACIÓN DIRECTA CORREGIDA...');
+            
+            // Obtener todos los items evaluados de esta área
+            console.log('📋 Items evaluados en esta área:', itemsAreaEvaluados.map(i => ({
+                item: i.item,
+                resultado: i.resultado ? 'Cumple' : 'No cumple',
+                rango: i.rango
+            })));
+            
+            // CORRECCIÓN: La puntuación directa es el NÚMERO DEL ITEM del último que cumplió
+            let ultimoItemCumplido = null;
+            let puntuacionDirecta = 0;
+            
+            // Recorrer desde el final hacia atrás para encontrar el último "Cumple"
+            for (let i = itemsAreaEvaluados.length - 1; i >= 0; i--) {
+                const item = itemsAreaEvaluados[i];
+                
+                if (item.resultado === true) {
+                    // Este es el último item que cumplió
+                    ultimoItemCumplido = item;
+                    puntuacionDirecta = item.item; // CORRECCIÓN: Usar el número del item, no el valor
+                    
+                    console.log('✅ ÚLTIMO ITEM QUE CUMPLIÓ ENCONTRADO:', {
+                        item: item.item,
+                        enunciado: item.enunciado,
+                        rango: item.rango,
+                        posicionEnLista: i + 1,
+                        puntuacionDirecta: puntuacionDirecta
+                    });
+                    
+                    break;
+                }
+            }
+            
+            // Si no se encontró ningún item que cumplió
+            if (!ultimoItemCumplido) {
+                console.log('⚠️  No se encontró ningún item que cumplió en esta área');
+                puntuacionDirecta = 0;
+            }
+            
+            console.log('📊 RESULTADO FINAL DE PUNTUACIÓN DIRECTA CORREGIDA:', {
+                puntuacionDirecta: puntuacionDirecta,
+                ultimoItemCumplido: ultimoItemCumplido ? {
+                    item: ultimoItemCumplido.item,
+                    enunciado: ultimoItemCumplido.enunciado,
+                    rango: ultimoItemCumplido.rango
+                } : null
+            });
+            
+            return {
+                puntuacionDirecta: puntuacionDirecta,
+                ultimoItemCumplido: ultimoItemCumplido
+            };
+        }
+        
+        // Función CORREGIDA para finalizar área
+        function finalizarArea() {
+            console.log('🏁 FINALIZANDO ÁREA:', areaActual);
+            
+            // Obtener items evaluados de esta área
+            const itemsAreaEvaluados = itemsEvaluados.filter(item => item.area === areaActual);
+            
+            console.log('📋 ITEMS EVALUADOS EN ESTA ÁREA:', itemsAreaEvaluados.map(i => ({
+                item: i.item,
+                resultado: i.resultado ? 'Cumple' : 'No cumple',
+                rango: i.rango
+            })));
+            
+            // Calcular puntuación directa corregida
+            const resultadoPuntuacion = calcularPuntuacionDirectaCorregida(itemsAreaEvaluados);
+            const puntuacionDirecta = resultadoPuntuacion.puntuacionDirecta;
+            const ultimoItemCumplido = resultadoPuntuacion.ultimoItemCumplido;
+            
+            // Obtener rango de edad para puntuación típica
+            const edadEnMeses = convertirEdadAMeses(edadCalculada.corregida);
+            const rangoEdad = obtenerRangoEdad(edadEnMeses);
+            const rangoExcel = mapeoRangosEdad[rangoEdad];
+            
+            console.log('🎯 RANGO PARA PUNTUACIÓN TÍPICA:', {
+                edadEnMeses: edadEnMeses.toFixed(2),
+                rangoEdad: rangoEdad,
+                rangoExcel: rangoExcel
+            });
+            
+            // Calcular puntuación típica desde Excel
+            const puntuacionTipica = obtenerPuntuacionTipicaExcel(areaActual, puntuacionDirecta, rangoExcel);
+            
+            puntuacionesFinales[areaActual] = {
+                puntuacionDirecta: puntuacionDirecta,
+                puntuacionTipica: puntuacionTipica,
+                itemsCompletados: itemsAreaEvaluados.length,
+                rangoEdad: rangoEdad,
+                rangoExcel: rangoExcel,
+                ultimoItemCumplido: ultimoItemCumplido ? ultimoItemCumplido.item : 0,
+                ultimoRangoEvaluado: ultimoItemCumplido ? ultimoItemCumplido.rango : 'N/A',
+                ultimoItemCumplidoDetalle: ultimoItemCumplido
+            };
+            
+            // Marcar área como completada
+            areasCompletadas.push(areaActual);
+            
+            console.log('✅ ÁREA FINALIZADA:', puntuacionesFinales[areaActual]);
+            
+            // Mostrar información de puntuación directa
+            mostrarInfoPuntuacionDirecta(areaActual, puntuacionDirecta, ultimoItemCumplido);
+            
+            // Actualizar estado de evaluación
+            actualizarEstadoEvaluacion();
+            
+            // Mostrar resumen
+            mostrarResumen();
+            
+            // Volver a selección de áreas después de un momento
+            setTimeout(() => {
+                cambiarArea();
+            }, 3000);
+        }
+        
+        // Función para mostrar información de puntuación directa
+        function mostrarInfoPuntuacionDirecta(area, puntuacionDirecta, ultimoItemCumplido) {
+            const nombresAreas = {
+                'motricidadGruesa': 'Motricidad Gruesa',
+                'motricidadFina': 'Motricidad Fina',
+                'audicionLenguaje': 'Audición y Lenguaje',
+                'personalSocial': 'Personal Social'
+            };
+            
+            let texto = `Área: ${nombresAreas[area]}<br>`;
+            texto += `Puntuación Directa: ${puntuacionDirecta}<br>`;
+            
+            if (ultimoItemCumplido) {
+                texto += `Último Item que Cumplió: Item ${ultimoItemCumplido.item} (${ultimoItemCumplido.rango})<br>`;
+                texto += `Número del Item: ${ultimoItemCumplido.item}<br>`;
+                texto += `Enunciado: ${ultimoItemCumplido.enunciado}`;
+            } else {
+                texto += `No se encontraron items que cumplieron`;
+            }
+            
+            document.getElementById('textoPuntuacionDirecta').innerHTML = texto;
+            document.getElementById('infoPuntuacionDirecta').classList.remove('hidden');
+        }
+        
+        // Función para actualizar estado de evaluación
+        function actualizarEstadoEvaluacion() {
+            const estadoDiv = document.getElementById('estadoEvaluacion');
+            const textoEstado = document.getElementById('textoEstado');
+            
+            if (areasCompletadas.length > 0) {
+                estadoDiv.classList.remove('hidden');
+                textoEstado.textContent = `${areasCompletadas.length} área(s) completada(s): ${areasCompletadas.join(', ')}`;
+            } else {
+                estadoDiv.classList.add('hidden');
+            }
+            
+            // Actualizar botones de áreas completadas
+            const nombresAreas = {
+                'motricidadGruesa': 'btnMotricidadGruesa',
+                'motricidadFina': 'btnMotricidadFina',
+                'audicionLenguaje': 'btnAudicionLenguaje',
+                'personalSocial': 'btnPersonalSocial'
+            };
+            
+            Object.keys(nombresAreas).forEach(area => {
+                const btn = document.getElementById(nombresAreas[area]);
+                if (areasCompletadas.includes(area)) {
+                    btn.classList.add('completada');
+                    btn.textContent = `✅ ${btn.textContent.replace('✅ ', '')}`;
+                } else {
+                    btn.classList.remove('completada');
+                    btn.textContent = btn.textContent.replace('✅ ', '');
+                }
+            });
+        }
+        
+        // Función para mostrar resumen
+        function mostrarResumen() {
+            const resumenDiv = document.getElementById('puntuacionesFinales');
+            let html = '<h4>Puntuaciones por Área:</h4>';
+            
+            Object.keys(puntuacionesFinales).forEach(area => {
+                const p = puntuacionesFinales[area];
+                const nombresAreas = {
+                    'motricidadGruesa': 'Motricidad Gruesa',
+                    'motricidadFina': 'Motricidad Fina',
+                    'audicionLenguaje': 'Audición y Lenguaje',
+                    'personalSocial': 'Personal Social'
+                };
+                
+                html += `
+                    <div class="resumen-area">
+                        <strong>${nombresAreas[area]}:</strong><br>
+                        Puntuación Directa: ${p.puntuacionDirecta}<br>
+                        Puntuación Típica: ${p.puntuacionTipica}<br>
+                        Items Completados: ${p.itemsCompletados}<br>
+                        Rango de Edad: ${p.rangoEdad}<br>
+                        Último Item Cumplido: ${p.ultimoItemCumplido}<br>
+                        Último Rango Evaluado: ${p.ultimoRangoEvaluado}
+                    </div>
+                `;
+            });
+            
+            resumenDiv.innerHTML = html;
+            document.getElementById('resumenFinal').classList.remove('hidden');
+        }
+        
+        // Función para actualizar lista de items
+        function actualizarListaItems() {
+            const listaDiv = document.getElementById('listaItems');
+            let html = '';
+            
+            itemsEvaluados.forEach((item, index) => {
+                const resultado = item.resultado ? '✅ Cumple' : '❌ No cumple';
+                const clase = item.resultado ? 'item-cumple' : 'item-no-cumple';
+                
+                html += `
+                    <div class="item-evaluado ${clase}">
+                        Item ${item.item} (${item.rango}): ${item.enunciado} - ${resultado}
+                    </div>
+                `;
+            });
+            
+            listaDiv.innerHTML = html;
+        }
+        
+        // Función de descarga Excel
+        function descargarExcel() {
+            console.log("📊 Descargando Excel...");
+            
+            // Crear datos para Excel
+            const datosExcel = {
+                'Datos del Paciente': {
+                    'Nombre': datosPaciente.nombre,
+                    'Apellidos': datosPaciente.apellidos,
+                    'Fecha de Nacimiento': datosPaciente.fechaNacimiento,
+                    'Semanas de Gestación': datosPaciente.semanasGestacion
+                },
+                'Edades': {
+                    'Edad Cronológica': `${edadCalculada.cronologica.años}a ${edadCalculada.cronologica.meses}m ${edadCalculada.cronologica.dias}d`,
+                    'Edad Corregida': `${edadCalculada.corregida.años}a ${edadCalculada.corregida.meses}m ${edadCalculada.corregida.dias}d`
+                },
+                'Puntuaciones por Área': {}
+            };
+            
+            // Agregar puntuaciones por área
+            Object.keys(puntuacionesFinales).forEach(area => {
+                const p = puntuacionesFinales[area];
+                const nombresAreas = {
+                    'motricidadGruesa': 'Motricidad Gruesa',
+                    'motricidadFina': 'Motricidad Fina',
+                    'audicionLenguaje': 'Audición y Lenguaje',
+                    'personalSocial': 'Personal Social'
+                };
+                
+                datosExcel['Puntuaciones por Área'][nombresAreas[area]] = {
+                    'Puntuación Directa': p.puntuacionDirecta,
+                    'Puntuación Típica': p.puntuacionTipica,
+                    'Rango de Edad': p.rangoEdad,
+                    'Items Completados': p.itemsCompletados,
+                    'Último Item Cumplido': p.ultimoItemCumplido,
+                    'Último Rango Evaluado': p.ultimoRangoEvaluado
+                };
+            });
+            
+            // Crear contenido CSV
+            let csvContent = '';
+            
+            // Datos del Paciente
+            csvContent += 'Datos del Paciente\n';
+            for (const key in datosExcel['Datos del Paciente']) {
+                csvContent += `${key},${datosExcel['Datos del Paciente'][key]}\n`;
+            }
+            csvContent += '\n';
+            
+            // Edades
+            csvContent += 'Edades\n';
+            for (const key in datosExcel['Edades']) {
+                csvContent += `${key},${datosExcel['Edades'][key]}\n`;
+            }
+            csvContent += '\n';
+            
+            // Puntuaciones por Área
+            csvContent += 'Puntuaciones por Área\n';
+            csvContent += 'Área,Puntuación Directa,Puntuación Típica,Rango de Edad,Items Completados,Último Item Cumplido,Último Rango Evaluado\n';
+            for (const area in datosExcel['Puntuaciones por Área']) {
+                const p = datosExcel['Puntuaciones por Área'][area];
+                csvContent += `${area},${p['Puntuación Directa']},${p['Puntuación Típica']},${p['Rango de Edad']},${p['Items Completados']},${p['Último Item Cumplido']},${p['Último Rango Evaluado']}\n`;
+            }
+            
+            // Crear y descargar archivo
+            const nombreArchivo = `Evaluacion_Desarrollo_${datosPaciente.nombre}_${datosPaciente.apellidos}_${new Date().toISOString().slice(0,10)}.csv`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', nombreArchivo);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            
+            console.log('📊 Archivo Excel descargado:', nombreArchivo);
+            alert(`✅ Archivo descargado: ${nombreArchivo}`);
+        }
+        
+        // Auto-llenar campos para prueba
+        function llenarCamposPrueba() {
+            document.getElementById('nombre').value = 'Juan';
+            document.getElementById('apellidos').value = 'Pérez García';
+            document.getElementById('fechaNacimiento').value = '2023-01-01';
+            document.getElementById('semanasGestacion').value = '32';
+            document.getElementById('genero').value = 'M';
+        }
+        
+        // Verificar funciones cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("📄 DOM cargado - Versión corregida con puntuación directa correcta");
+            
+            // Verificar funciones
+            console.log("🔍 Verificando funciones:");
+            console.log("  iniciarEvaluacion:", typeof iniciarEvaluacion);
+            console.log("  seleccionarArea:", typeof seleccionarArea);
+            console.log("  evaluarItem:", typeof evaluarItem);
+            console.log("  cambiarRango:", typeof cambiarRango);
+            console.log("  calcularEdad:", typeof calcularEdad);
+            console.log("  obtenerPuntuacionTipicaExcel:", typeof obtenerPuntuacionTipicaExcel);
+            console.log("  calcularPuntuacionDirectaCorregida:", typeof calcularPuntuacionDirectaCorregida);
+            console.log("  descargarExcel:", typeof descargarExcel);
+            console.log("  finalizarArea:", typeof finalizarArea);
+            console.log("  actualizarEstadoEvaluacion:", typeof actualizarEstadoEvaluacion);
+            
+            // Auto-llenar campos después de 1 segundo
+            setTimeout(() => {
+                console.log("🧪 Llenando campos automáticamente para prueba");
+                llenarCamposPrueba();
+            }, 1000);
+        });
+        
+        console.log("🔧 Script con puntuación directa corregida cargado");
+    </script>
+</body>
+</html>
